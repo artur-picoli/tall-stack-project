@@ -1,5 +1,4 @@
-<div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <section class="max-w-xl">
+    <x-default-card>
 
         <div class="flex gap-3 mb-2">
             @if ($photo && !$errors->has('photo'))
@@ -25,7 +24,9 @@
         </p>
         <form wire:submit.prevent="save" class="space-y-6">
             <div class="w-full ">
-                <label class="block mb-2 text-sm font-medium @error('photo') text-red-700 dark:text-red-500 @else text-gray-900 dark:text-white @enderror " for="file_input">Foto de
+                <label
+                    class="block mb-2 text-sm font-medium @error('photo') text-red-700 dark:text-red-500 @else text-gray-900 dark:text-white @enderror "
+                    for="file_input">Foto de
                     perfil
                     <svg wire:loading wire:target="photo" aria-hidden="true" role="status"
                         class="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none"
@@ -59,6 +60,4 @@
                 <x-short-button wireTarget="save" buttonText="Salvar" />
             </div>
         </form>
-    </section>
-</div>
-
+    </x-default-card>

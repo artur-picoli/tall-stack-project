@@ -9,6 +9,7 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Home;
+use App\Http\Livewire\Student\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,18 +54,14 @@ Route::middleware('auth')->group(function () {
         ->middleware('signed')
         ->name('verification.verify');
 
-
-    // Route::get('profile/edit-profile',EditProfile::class)->name('edit.s');
-
     Route::post('logout', LogoutController::class)
         ->name('logout');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', Home::class)->name('home');
-
     Route::view('guardian/', 'livewire.guardian.index')->name('guardian.index');
-
     Route::view('profile/','livewire.profile.profile')->name('profile');
+    Route::get('student', Student::class)->name('student');
 
 });
