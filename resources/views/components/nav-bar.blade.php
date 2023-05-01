@@ -13,7 +13,7 @@
                         </path>
                     </svg>
                 </button>
-                <a href="{{ route('home') }}" class="flex ml-2 md:mr-24">
+                <a href="{{ route('inicio') }}" class="flex ml-2 md:mr-24">
                     <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
                     <span
                         class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Guardião</span>
@@ -58,7 +58,7 @@
                         <ul class="py-1" role="none">
 
                             <li>
-                                <a href="{{ route('profile') }}"
+                                <a href="{{ route('perfil') }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                     role="menuitem">Perfil</a>
                             </li>
@@ -85,7 +85,7 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="{{ route('student') }}"
+                <a href="{{ route('alunos') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
                         class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -97,7 +97,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="{{ route('responsaveis') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
                         class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

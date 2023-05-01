@@ -20,13 +20,13 @@ class EmailVerificationController extends Controller
             throw new AuthorizationException();
         }
         if (Auth::user()->hasVerifiedEmail()) {
-            return redirect(route('home'));
+            return redirect(route('inicio'));
         }
 
         if (Auth::user()->markEmailAsVerified()) {
             event(new Verified(Auth::user()));
         }
 
-        return redirect(route('home'))->with('verificated',true);
+        return redirect(route('inicio'))->with('verificated',true);
     }
 }

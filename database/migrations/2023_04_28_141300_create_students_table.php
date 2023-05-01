@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('identification_document');
-            $table->string('photo');
-            $table->string('document_photo');
-            $table->text('observation');
+            $table->string('photo')->nullable();
+            $table->string('document_photo')->nullable();
+            $table->text('observation')->nullable();
             $table->timestamps();
         });
     }

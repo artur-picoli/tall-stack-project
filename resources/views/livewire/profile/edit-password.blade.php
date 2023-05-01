@@ -3,14 +3,13 @@
 
     <form wire:submit.prevent="save" class="space-y-6">
         <div class="w-full ">
-            <x-default-input name="password" placeHolder="" type="password" label="Senha" />
+            <x-inputs.password  wire:model.lazy="password" label="Senha" placeholder="" />
         </div>
         <div class="w-full ">
-            <x-default-input wireModel="passwordConfirmation" name="password_confirmation" placeHolder=""
-                type="password" label="Confirme a senha" />
+            <x-inputs.password  wire:model.lazy="passwordConfirmation" label="Confirme a senha" placeholder="" />
         </div>
         <div>
-            <x-short-button wireTarget="save" buttonText="Salvar" />
+            <x-button wire:click="save" spinner="save" primary label="Salvar" />
         </div>
     </form>
 </x-default-card>

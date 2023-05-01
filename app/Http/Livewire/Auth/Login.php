@@ -32,7 +32,7 @@ class Login extends Component
             return;
         }
 
-        return redirect(route('home'));
+        return redirect(route('inicio'));
     }
 
     public function render()
