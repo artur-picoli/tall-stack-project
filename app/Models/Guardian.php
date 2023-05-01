@@ -15,6 +15,5 @@ class Guardian extends Model
         'photo',
         'document_photo',
         'observation',
-        'type'
     ];
 }

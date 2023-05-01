@@ -1,33 +1,30 @@
+<div class="mb-5 mt-5">
     <x-default-card>
-
         <div class="flex gap-3 mb-2">
             @if ($photo && !$errors->has('photo'))
                 <img class="w-12 h-12 rounded-full" src="{{ $photo->temporaryUrl() }}" alt="Extra large avatar">
-            @elseif($userPhoto && !$errors->has('photo'))
-                <img class="w-12 h-12 rounded-full" src="{{ asset($userPhoto) }}" alt="Extra large avatar">
             @else
                 <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                    <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                             clip-rule="evenodd"></path>
                     </svg>
                 </div>
             @endif
             <div>
-                <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Edição de Perfil
+                <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cadastrar novo responsável
                 </h5>
             </div>
         </div>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Atualize as informações de sua conta e seu endereço de e-mail
+            Preencha os dados do responsável
         </p>
         <form wire:submit.prevent="save" class="space-y-6">
             <div class="w-full ">
                 <label
-                    class="block text-sm font-medium @error('photo') font-medium text-negative-600 @else text-gray-700 dark:text-gray-400 @enderror "
-                    for="file_input">Foto de
-                    perfil
+                    class="block text-sm font-medium @error('photo') text-negative-600 @else text-gray-700 dark:text-gray-400 @enderror "
+                    for="file_input">Foto do Responsável
                     <svg wire:loading wire:target="photo" aria-hidden="true" role="status"
                         class="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -53,11 +50,14 @@
             </div>
             <div class="w-full ">
                 <div>
-                    <x-input wire:model.lazy="email" label="E-mail" />
+                    <x-input wire:model.lazy="identification_document" label="CPF" />
                 </div>
             </div>
-            <div>
+            <div class="space-x-2">
                 <x-button wire:click="save" spinner="save" primary label="Salvar" />
+                <x-button wire:click="cancelCreate" spinner="cancel" secondary label="Cancelar" />
             </div>
+
         </form>
     </x-default-card>
+</div>

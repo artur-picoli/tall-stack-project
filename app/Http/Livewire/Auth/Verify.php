@@ -12,7 +12,7 @@ class Verify extends Component
     public function resend()
     {
         if (Auth::user()->hasVerifiedEmail()) {
-            redirect(route('home'));
+            redirect(route('inicio'));
         }
 
         Auth::user()->sendEmailVerificationNotification();

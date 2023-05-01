@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Livewire\Home;
 use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Auth\Passwords\Confirm;
+use App\Http\Livewire\Auth\Verify;
+use App\Http\Livewire\Auth\Register;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Student\Students;
+use App\Http\Livewire\Guardian\Guardians;
 use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
-use App\Http\Livewire\Auth\Register;
-use App\Http\Livewire\Auth\Verify;
-use App\Http\Livewire\Home;
-use App\Http\Livewire\Student\Student;
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Auth\Passwords\Confirm;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +60,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('home', Home::class)->name('home');
-    Route::view('guardian/', 'livewire.guardian.index')->name('guardian.index');
-    Route::view('profile/','livewire.profile.profile')->name('profile');
-    Route::get('student', Student::class)->name('student');
+    Route::get('home', Home::class)->name('inicio');
+    Route::view('profile','livewire.profile.profile')->name('perfil');
+    Route::get('guardians', Guardians::class)->name('responsaveis');
+    Route::get('students', Students::class)->name('alunos');
 
 });
