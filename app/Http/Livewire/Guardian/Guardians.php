@@ -10,16 +10,15 @@ use Livewire\WithFileUploads;
 
 class Guardians extends Component
 {
-
     use WithFileUploads, Actions, WithPagination;
-
-    public $createClick = false;
 
     public $photo;
 
     public $identification_document;
 
     public $name;
+
+    public $cardModal;
 
     public function paginationView()
     {
@@ -55,21 +54,6 @@ class Guardians extends Component
             'description' => 'Novo responsável criado com sucesso! ;)',
             'icon'        => 'success'
         ]);
-    }
-
-
-    public function create()
-    {
-        $this->createClick = true;
-
-    }
-
-
-    public function cancelCreate()
-    {
-        $this->createClick = false;
-
-
     }
 
     public function render()
