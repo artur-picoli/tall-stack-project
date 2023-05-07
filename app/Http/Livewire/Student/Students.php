@@ -23,9 +23,11 @@ class Students extends Component
 
     public $email;
 
-    public $isEdit;
+    public $cardModal;
 
-    public $cardModal = '';
+    public $editPhoto;
+
+    public $currentPhoto;
 
     public $studentId;
 
@@ -33,9 +35,9 @@ class Students extends Component
 
     public $documentType = 1;
 
-    public $iteration;
+    public $resetInputFile;
 
-    protected $listeners = ['modalClose' => 'modalClose', 'newPhoto' => 'newPhoto'];
+    protected $listeners = ['closeModal' => 'closeModal', 'newPhoto' => 'newPhoto'];
 
     public function paginationView()
     {
@@ -50,6 +52,7 @@ class Students extends Component
             'identification_document' => ['required', Rule::unique(Student::class, 'identification_document')->ignore($this->studentId), $cpf],
             'name' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
+            'editPhoto' => ['nullable', 'mimes:jpg,png', 'max:10000'],
             'documentType' => ['required'],
             'phone' => ['min:11'],
             'email' => ['email', Rule::unique(Student::class, 'email')->ignore($this->studentId)]
@@ -64,10 +67,13 @@ class Students extends Component
         } elseif ($this->documentType == 2) {
             $attributeName = 'RG';
         }
+        
         return [
             'identification_document' => $attributeName,
             'documentType' => 'Tipo de Documento',
-            'phone' => 'Celular'
+            'phone' => 'Celular',
+            'photo' => 'Foto do aluno',
+            'editPhoto' => 'Foto do aluno'
         ];
     }
 
@@ -80,8 +86,6 @@ class Students extends Component
         ];
     }
 
-
-
     public function updatedDocumentType()
     {
         $this->reset('identification_document');
@@ -93,6 +97,13 @@ class Students extends Component
     {
         $this->validate([
             'photo' => 'nullable|mimes:jpg,png|max:10000',
+        ]);
+    }
+
+    public function updatedEditPhoto()
+    {
+        $this->validate([
+            'editPhoto' => 'nullable|mimes:jpg,png|max:10000',
         ]);
     }
 
@@ -113,7 +124,6 @@ class Students extends Component
             'email' => $this->email
         ]);
 
-
         $this->notification([
             'title'       => 'Aluno salvo!',
             'description' => 'Novo aluno criado com sucesso! ;)',
@@ -122,7 +132,7 @@ class Students extends Component
 
         $this->resetExcept('arrDocumentType');
         $this->resetErrorBag();
-        $this->iteration++;
+        $this->resetInputFile++;
     }
 
     public function edit(Student $student)
@@ -133,13 +143,37 @@ class Students extends Component
             'name' => $student->name,
             'email' => $student->email,
             'phone' => $student->phone,
-            'photo' => $student->photo,
+            'currentPhoto' => $student->photo,
             'identification_document' => $student->identification_document,
             'documentType' => $student->document_type,
         ]);
 
-        $this->isEdit = true;
         $this->cardModal = true;
+    }
+
+    public function delete(Student $student)
+    {
+
+        $this->dialog()->confirm([
+            'title'       => 'Você tem certeza?',
+            'description' => 'Deseja mesmo excluir o aluno(a) ' . $student->name . '?',
+            'icon'        => 'question',
+            'acceptLabel' => 'Sim',
+            'rejectLabel' => 'Não',
+            'method'      => 'destroy',
+            'params'      => $student
+        ]);
+    }
+
+    public function destroy(Student $student)
+    {
+        $student->delete();
+
+        $this->notification([
+            'title'       => 'Aluno removido!',
+            'description' => 'Novo removido com sucesso! ;)',
+            'icon'        => 'success'
+        ]);
     }
 
     public function update($id)
@@ -149,36 +183,42 @@ class Students extends Component
         $student = Student::find($id);
 
         $student->name = $this->name;
+        if ($this->editPhoto) {
+            $student->photo = optional($this->editPhoto)->store('photos');
+        }
         $student->email = $this->email;
         $student->phone = $this->phone;
         $student->email = $this->email;
         $student->document_type = $this->documentType;
         $student->identification_document = $this->identification_document;
 
-        if($student->isDirty()){
+
+        if ($student->isDirty()) {
             $student->save();
         }
 
         $this->notification([
             'title'       => 'Aluno salvo!',
-            'description' => 'Novo aluno criado com sucesso! ;)',
+            'description' => 'Aluno editado com sucesso! ;)',
             'icon'        => 'success'
         ]);
 
         $this->resetExcept('arrDocumentType');
         $this->resetErrorBag();
-        $this->iteration++;
+        $this->resetInputFile++;
     }
 
 
     public function newPhoto()
     {
-        $this->reset('photo');
+        $this->reset('photo', 'editPhoto');
     }
 
-    public function openModal()
+    public function closeModal()
     {
-        $this->cardModal = true;
+        $this->resetExcept('arrDocumentType', 'resetInputFile');
+        $this->resetErrorBag();
+        $this->resetInputFile++;
     }
 
     public function getStudentsProperty()
