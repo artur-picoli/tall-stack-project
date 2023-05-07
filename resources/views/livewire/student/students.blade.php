@@ -5,10 +5,10 @@
     </div>
 
     <div class="mb-3">
-        <x-button spinner="save" primary label="Novo Aluno" wire:click="openModal" />
+        <x-button primary label="Novo Aluno"   wire:click="$set('cardModal', 'true')" />
     </div>
 
-    @include('livewire.student.student-create')
+    @include('livewire.student.student-modal')
     @if (count($this->students) > 0)
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700 ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -55,7 +55,7 @@
                             <td class="px-6 py-4 text-right">
                                 <x-dropdown>
                                         <x-dropdown.item icon="pencil-alt" label="Editar" wire:click="edit({{ $student->id }})"/>
-                                        <x-dropdown.item icon="trash" label="Excluir" />
+                                        <x-dropdown.item icon="trash" label="Excluir" wire:click="delete({{ $student->id }})" />
                                 </x-dropdown>
                             </td>
                         </tr>

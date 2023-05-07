@@ -34,6 +34,7 @@
 
     <body class="bg-gray-100 dark:bg-slate-900">
         @yield('body')
+        <x-dialog z-index="z-50" blur="md" align="center" />
         <x-notifications position="bottom-right" />
     </body>
 </html>
