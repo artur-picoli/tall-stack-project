@@ -67,7 +67,7 @@ class Students extends Component
         } elseif ($this->documentType == 2) {
             $attributeName = 'RG';
         }
-        
+
         return [
             'identification_document' => $attributeName,
             'documentType' => 'Tipo de Documento',
@@ -137,18 +137,16 @@ class Students extends Component
 
     public function edit(Student $student)
     {
-        $this->studentId = $student->id;
-
         $this->fill([
+            'studentId'=> $student->id,
             'name' => $student->name,
             'email' => $student->email,
             'phone' => $student->phone,
             'currentPhoto' => $student->photo,
             'identification_document' => $student->identification_document,
             'documentType' => $student->document_type,
+            'cardModal' => true
         ]);
-
-        $this->cardModal = true;
     }
 
     public function delete(Student $student)
@@ -183,9 +181,11 @@ class Students extends Component
         $student = Student::find($id);
 
         $student->name = $this->name;
+
         if ($this->editPhoto) {
             $student->photo = optional($this->editPhoto)->store('photos');
         }
+
         $student->email = $this->email;
         $student->phone = $this->phone;
         $student->email = $this->email;
@@ -223,7 +223,7 @@ class Students extends Component
 
     public function getStudentsProperty()
     {
-        return Student::latest()->paginate(10);
+        return Student::latest()->paginate(5);
     }
 
     public function render()

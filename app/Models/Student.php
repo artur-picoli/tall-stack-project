@@ -19,4 +19,16 @@ class Student extends Model
         'document_photo',
         'observation'
     ];
+
+    protected $documentTypeLabels = [
+        1 => 'CPF',
+        2 => 'RG',
+        3 => 'N° Doc',
+    ];
+
+    public function getDocumentTypeLabelAttribute()
+    {
+        return $this->documentTypeLabels[$this->attributes['document_type']];
+    }
+
 }

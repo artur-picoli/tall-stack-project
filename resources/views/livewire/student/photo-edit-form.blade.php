@@ -13,7 +13,7 @@
                     class="me-3 w-10 h-10 rounded-full" src="{{ asset($currentPhoto) }}"
                     alt="Extra large avatar">
             @endif
-            <div class="me-3" wire:loading wire:target="editPhoto">
+            <div class="me-3" id="loading-edit" wire:loading wire:target="editPhoto">
                 <svg aria-hidden="true"
                     class="w-9 h-10 rounded-full text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
