@@ -13,3 +13,18 @@ if (!function_exists('format_document')) {
         return $value;
     }
 }
+
+if (!function_exists('format_phone')) {
+
+    function format_phone($value)
+    {
+        $PHONE_LENGTH = 11;
+        $phone = preg_replace("/\D/", '', $value);
+
+        if (strlen($phone) === $PHONE_LENGTH) {
+            return preg_replace("/(\d{2})(\d{5})(\d{4})/", "($1)$2-$3", $phone);
+        }
+
+        return $value;
+    }
+}
