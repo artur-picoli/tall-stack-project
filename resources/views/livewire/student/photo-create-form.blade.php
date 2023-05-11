@@ -24,7 +24,7 @@
             @endif
         </div>
         <div class="w-full ">
-            <input wire:model="photo" wire:click="$emitUp('newPhoto')"
+            <input wire:model="photo" wire:click="$emitSelf('newPhoto')"
                 class="transition ease-in-out duration-100 focus:outline-none shadow-sm block w-full  text-sm border rounded-lg cursor-pointer @error('photo')  text-negative-900 dark:text-negative-600 placeholder-negative-300 dark:placeholder-negative-500 border border-negative-300 focus:ring-negative-500 focus:border-negative-500 dark:bg-secondary-800 dark:border-negative-600  @else placeholder-secondary-400 dark:bg-secondary-800 dark:text-secondary-400 dark:placeholder-secondary-500 border-secondary-300 focus:ring-primary-500 focus:border-primary-500 dark:border-secondary-600 @enderror"
                 type="file" id="upload{{ $resetInputFile }}">
             @error('photo')
