@@ -3,9 +3,9 @@
         <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Gerenciamento de Alunos
         </h5>
     </div>
-    <div class="flex items-center justify-between py-4 bg-white dark:bg-gray-800">
-        <div>
-            <x-button primary label="Novo Aluno" wire:click="$set('cardModal', 'true')" />
+    <div class="flex flex-col justify-between py-4 bg-white dark:bg-gray-800 sm:flex-row">
+        <div class="mb-4 sm:mb-0">
+            <x-button icon="plus" primary label="Novo Aluno" wire:click="$emit('openModal')" />
         </div>
         <div>
             <label for="table-search" class="sr-only">Search</label>
@@ -18,13 +18,13 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users"
-                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search for users">
+                <input type="text" id="table-search-users" wire:model="search"
+                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full sm:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Pesquisar aluno pelo nome">
             </div>
         </div>
     </div>
-    @include('livewire.student.student-modal')
+    @livewire('student.modal-create-update')
     @if (count($this->students) > 0)
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700 ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -40,7 +40,6 @@
                             Telefone
                         </th>
                         <th scope="col" class="px-6  py-3">
-                            Opções
                         </th>
                     </tr>
                 </thead>
@@ -71,7 +70,7 @@
                                 </div>
                             </th>
                             <td class="px-6 py-4">
-                                {{ $student->getDocumentTypeLabelAttribute() }}:
+                                {{ $student->getDocumentTypeLabelAttribute()}}:
                                 {{ format_document($student->identification_document, $student->document_type) }}
                             </td>
                             <td class="px-6 py-4">
@@ -80,7 +79,7 @@
                             <td class="px-6 gap-3 py-4 text-right">
                                 <x-dropdown>
                                     <x-dropdown.item icon="pencil-alt" label="Editar"
-                                        wire:click="edit({{ $student->id }})" />
+                                        wire:click="$emit('edit', {{ $student->id }})" />
                                     <x-dropdown.item icon="trash" label="Excluir"
                                         wire:click="delete({{ $student->id }})" />
                                 </x-dropdown>
