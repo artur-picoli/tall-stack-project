@@ -3,11 +3,11 @@
         <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Gerenciamento de Alunos
         </h5>
     </div>
-    <div class="flex flex-col justify-between py-4 bg-white dark:bg-gray-800 sm:flex-row">
-        <div class="mb-4 sm:mb-0">
-            <x-button icon="plus" primary label="Novo Aluno" wire:click="$emit('openModal')" />
+    <div class="flex flex-col justify-between py-4 bg-white dark:bg-gray-800 md:flex-row md:items-center">
+        <div class="mb-4 md:mb-0 md:order-1">
+            <x-button icon="plus" primary label="Novo do Aluno" wire:click="$emit('openModal')" />
         </div>
-        <div>
+        <div class="md:order-2">
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -70,7 +70,7 @@
                                 </div>
                             </th>
                             <td class="px-6 py-4">
-                                {{ $student->getDocumentTypeLabelAttribute()}}:
+                                {{ $student->getDocumentTypeLabelAttribute() }}:
                                 {{ format_document($student->identification_document, $student->document_type) }}
                             </td>
                             <td class="px-6 py-4">
@@ -88,6 +88,20 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    @else
+        <div class="flex p-4 mb-4 text-sm  justify-center text-red-800  rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+            role="alert">
+            <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+                <span class="font-medium">Nenhum aluno localizado.</span>
+            </div>
         </div>
     @endif
     <div class="mt-2">

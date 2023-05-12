@@ -17,22 +17,22 @@
             </div>
         </div>
         <div class="mt-6">
-            <x-long-link-button href="home"  textButton="Entrar" />
+            <x-long-link-button href="home" textButton="Entrar" />
 
         </div>
     @else
         <form wire:submit.prevent="resetPassword">
             <input wire:model="token" type="hidden">
-
             <div>
-                <x-default-input name="email" placeHolder="example@example.com.br" type="text" label="E-mail" />
+                <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" readonly
+                    placeholder="example@example.com.br" />
             </div>
             <div class="mt-6">
-                <x-default-input name="password" placeHolder="•••••••••" type="password" label="Senha" />
+                <x-inputs.password icon="lock-closed" wire:model.lazy="password" label="Senha" />
             </div>
             <div class="mt-6">
-                <x-default-input wireModel="passwordConfirmation" name="password_confirmation" placeHolder="•••••••••"
-                    type="password" label="Confirme a senha" />
+                <x-inputs.password icon="lock-closed" wire:model.lazy="passwordConfirmation"
+                    label="Confirme sua Senha" />
             </div>
             <div class="mt-6">
                 <div class="mt-6">

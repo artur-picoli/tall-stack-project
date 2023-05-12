@@ -1,10 +1,10 @@
-<x-modal.card title="Cadastro de Aluno" blur wire:model="modalCreateUpdate" x-on:close="closeModal">
+<x-modal.card title="Cadastro de Responsável" blur wire:model="modalCreateUpdate" x-on:close="closeModal">
     <div class="grid grid-cols-1 gap-4">
         <form wire:submit.prevent="save" class="space-y-6">
-            @if ($this->studentId)
-                @include('livewire.student.photo-edit-form')
+            @if ($this->guardianId)
+                @include('livewire.guardian.photo-edit-form')
             @else
-                @include('livewire.student.photo-create-form')
+                @include('livewire.guardian.photo-create-form')
             @endif
             <div class="w-full ">
                 <div>

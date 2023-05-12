@@ -12,8 +12,22 @@ class Guardian extends Model
     protected $fillable = [
         'name',
         'identification_document',
+        'document_type',
+        'email',
+        'phone',
         'photo',
         'document_photo',
-        'observation',
+        'observation'
     ];
+
+    protected $documentTypeLabels = [
+        1 => 'CPF',
+        2 => 'RG',
+        3 => 'N° Doc',
+    ];
+
+    public function getDocumentTypeLabelAttribute()
+    {
+        return $this->documentTypeLabels[$this->attributes['document_type']];
+    }
 }

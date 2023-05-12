@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Student;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 use WireUi\Traits\Actions;
@@ -30,11 +31,15 @@ class Students extends Component
 
     public function destroy(Student $student)
     {
+        if($student->photo && Storage::exists($student->photo)){
+            Storage::delete($student->photo);
+        }
+
         $student->delete();
 
         $this->notification([
             'title'       => 'Aluno removido!',
-            'description' => 'Novo removido com sucesso! ;)',
+            'description' => 'Aluno removido com sucesso! ;)',
             'icon'        => 'success'
         ]);
 

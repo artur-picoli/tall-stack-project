@@ -2,64 +2,62 @@
 
 namespace App\Http\Livewire\Guardian;
 
-use Livewire\Component;
 use App\Models\Guardian;
-use WireUi\Traits\Actions;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\WithFileUploads;
+use WireUi\Traits\Actions;
 
 class Guardians extends Component
 {
-    use WithFileUploads, Actions, WithPagination;
+    use Actions, WithPagination;
 
-    public $photo;
+    public $search;
 
-    public $identification_document;
+    protected $listeners = ['refresh' => '$refresh'];
 
-    public $name;
+    public function delete(Guardian $guardian)
+    {
+        $this->dialog()->confirm([
+            'title'       => 'Você tem certeza?',
+            'description' => 'Deseja mesmo excluir o(a) responsável ' . $guardian->name . '?',
+            'icon'        => 'question',
+            'acceptLabel' => 'Sim',
+            'rejectLabel' => 'Não',
+            'method'      => 'destroy',
+            'params'      => $guardian
+        ]);
+    }
 
-    public $cardModal;
+    public function destroy(Guardian $guardian)
+    {
+        if($guardian->photo && Storage::exists($guardian->photo)){
+            Storage::delete($guardian->photo);
+        }
+
+        $guardian->delete();
+
+        $this->notification([
+            'title'       => 'Responsável removido!',
+            'description' => 'Responsável removido com sucesso! ;)',
+            'icon'        => 'success'
+        ]);
+
+        $this->reset();
+    }
 
     public function paginationView()
     {
         return 'livewire::pagination-links';
     }
 
-    public function updatedPhoto()
+    public function getGuardiansProperty()
     {
-        $this->validate([
-            'photo' => 'required|mimes:jpg,png|max:10000',
-        ]);
-
-    }
-
-    public function save()
-    {
-        $this->validate([
-            'identification_document' => ['required', 'unique:guardians'],
-            'name' => ['required'],
-            'photo' => ['required', 'mimes:jpg,png', 'max:10000']
-        ]);
-
-        $guardian = Guardian::create([
-            'identification_document' => $this->identification_document,
-            'name' => $this->name,
-            'photo' =>  $this->photo->store('photos')
-        ]);
-
-        $this->reset();
-
-        $this->notification([
-            'title'       => 'Responsável salvo!',
-            'description' => 'Novo responsável criado com sucesso! ;)',
-            'icon'        => 'success'
-        ]);
+        return Guardian::where('name', 'like', "%{$this->search}%")->latest()->paginate(5);
     }
 
     public function render()
     {
-        return view('livewire.guardian.guardians', [
-            'guardians' => Guardian::latest()->paginate(10)
-        ]);
+        return view('livewire.guardian.guardians');
     }
 }
