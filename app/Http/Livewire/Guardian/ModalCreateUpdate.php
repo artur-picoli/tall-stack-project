@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Student;
+namespace App\Http\Livewire\Guardian;
 
 
-use App\Http\Livewire\Student\Traits\ModalCreateUpdatePropertiesRulesValidationTrait;
-use App\Models\Student;
+use App\Http\Livewire\Guardian\Traits\ModalCreateUpdatePropertiesRulesValidationTrait;
+use App\Models\Guardian;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -70,12 +70,12 @@ class ModalCreateUpdate extends Component
 
     public function save()
     {
-        if ($this->studentId) {
-            return $this->update($this->studentId);
+        if ($this->guardianId) {
+            return $this->update($this->guardianId);
         }
         $this->validate();
 
-        Student::create([
+        Guardian::create([
             'document_type' => $this->documentType,
             'identification_document' => $this->identification_document,
             'name' => $this->name,
@@ -85,24 +85,24 @@ class ModalCreateUpdate extends Component
         ]);
 
         $this->notification([
-            'title'       => 'Aluno salvo!',
-            'description' => 'Novo aluno criado com sucesso! ;)',
+            'title'       => 'Responsável salvo!',
+            'description' => 'Novo responsável criado com sucesso! ;)',
             'icon'        => 'success'
         ]);
 
         $this->resetModalAfterSaveOrUpdateAndRefreshList();
     }
 
-    public function edit(Student $student)
+    public function edit(Guardian $guardian)
     {
         $this->fill([
-            'studentId' => $student->id,
-            'name' => $student->name,
-            'email' => $student->email,
-            'phone' => $student->phone,
-            'currentPhoto' => $student->photo,
-            'identification_document' => $student->identification_document,
-            'documentType' => $student->document_type,
+            'guardianId' => $guardian->id,
+            'name' => $guardian->name,
+            'email' => $guardian->email,
+            'phone' => $guardian->phone,
+            'currentPhoto' => $guardian->photo,
+            'identification_document' => $guardian->identification_document,
+            'documentType' => $guardian->document_type,
             'modalCreateUpdate' => true
         ]);
     }
@@ -111,30 +111,30 @@ class ModalCreateUpdate extends Component
     {
         $this->validate();
 
-        $student = Student::find($id);
+        $guardian = Guardian::find($id);
 
         if ($this->editPhoto) {
-            if ($student->photo && Storage::exists($student->photo)) {
-                Storage::delete($student->photo);
+            if ($guardian->photo && Storage::exists($guardian->photo)) {
+                Storage::delete($guardian->photo);
             }
-            $student->photo = $this->editPhoto->store('photos');
+            $guardian->photo = $this->editPhoto->store('photos');
         }
 
-        $student->name = $this->name;
-        $student->email = $this->email;
-        $student->phone = $this->phone;
-        $student->email = $this->email;
-        $student->document_type = $this->documentType;
-        $student->identification_document = $this->identification_document;
+        $guardian->name = $this->name;
+        $guardian->email = $this->email;
+        $guardian->phone = $this->phone;
+        $guardian->email = $this->email;
+        $guardian->document_type = $this->documentType;
+        $guardian->identification_document = $this->identification_document;
 
 
-        if ($student->isDirty()) {
-            $student->save();
+        if ($guardian->isDirty()) {
+            $guardian->save();
         }
 
         $this->notification([
-            'title'       => 'Aluno salvo!',
-            'description' => 'Aluno editado com sucesso! ;)',
+            'title'       => 'Responsável salvo!',
+            'description' => 'Responsável editado com sucesso! ;)',
             'icon'        => 'success'
         ]);
 
@@ -151,6 +151,6 @@ class ModalCreateUpdate extends Component
 
     public function render()
     {
-        return view('livewire.student.modal-create-update');
+        return view('livewire.guardian.modal-create-update');
     }
 }

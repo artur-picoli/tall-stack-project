@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Profile;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -21,19 +22,14 @@ class EditProfile extends Component
 
     public $userPhoto;
 
-
-
     public function rules()
     {
         return [
             'email' => ['required', 'email', Rule::unique(User::class)->ignore(Auth::user()->id)],
             'name' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,png', 'max:10000']
-            // 'password' => ['sometimes','nullable','min:8','same:passwordConfirmation'],
-            // 'passwordConfirmation' => ['sometimes','nullable','min:8','same:password'],
         ];
     }
-
 
     public function updatedPhoto()
     {
@@ -49,7 +45,7 @@ class EditProfile extends Component
         $this->userPhoto = Auth::user()->photo;
     }
 
-    public function save()
+    public function update()
     {
         $this->validate();
 
@@ -57,9 +53,14 @@ class EditProfile extends Component
         $user->email = $this->email;
         $user->name = $this->name;
 
-        if ($this->photo) {
-            $user->photo = $this->photo->store('photos');
+        if ($user->photo) {
+            if ($this->photo && Storage::exists($user->photo)) {
+                Storage::delete($user->photo);
+            }
         }
+
+        $user->photo = optional($this->photo)->store('photos');
+
         if ($user->isDirty()) {
             $user->save();
         };

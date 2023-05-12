@@ -8,12 +8,11 @@
     <x-enter-or-register-head h2="Entre em sua conta" linkName="crie uma nova conta" route="register" />
     <form wire:submit.prevent="authenticate">
         <div>
-            <x-default-input name="email" placeHolder="example@example.com.br" type="text" label="E-mail" />
+            <x-input icon="user" wire:model.lazy="email" label="E-mail" placeholder="example@example.com.br" />
         </div>
         <div class="mt-6">
-            <x-default-input name="password" placeHolder="•••••••••" type="password" label="Senha" />
+            <x-inputs.password icon="lock-closed"  wire:model.lazy="password" label="Senha" placeholder="" />
         </div>
-
         <div class="flex items-center justify-between mt-6">
             <div class="flex items-center">
                 <input wire:model.lazy="remember" id="remember" name="remember" type="checkbox" value=""
