@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('home', Home::class)->name('inicio');
+    Route::view('home', 'livewire.home')->name('inicio');
     Route::view('profile','livewire.profile.profile')->name('perfil');
     Route::get('guardians', Guardians::class)->name('responsaveis');
     Route::get('students', Students::class)->name('alunos');
