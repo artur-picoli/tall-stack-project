@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Student;
 
-
+use App\Events\StudentCreate;
 use App\Http\Livewire\Student\Traits\ModalCreateUpdatePropertiesRulesValidationTrait;
 use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
@@ -90,6 +90,8 @@ class ModalCreateUpdate extends Component
             'icon'        => 'success'
         ]);
 
+        StudentCreate::dispatch();
+
         $this->resetModalAfterSaveOrUpdateAndRefreshList();
     }
 
@@ -126,7 +128,6 @@ class ModalCreateUpdate extends Component
         $student->email = $this->email;
         $student->document_type = $this->documentType;
         $student->identification_document = $this->identification_document;
-
 
         if ($student->isDirty()) {
             $student->save();
