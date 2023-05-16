@@ -20,7 +20,3 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('studentsCount', function () {
     return true;
 });
-
-Broadcast::channel('channel-teste', function ($user) {
-    return (bool) $user->id;
-});

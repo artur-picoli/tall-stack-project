@@ -8,13 +8,7 @@ use Livewire\Component;
 class Dashboard extends Component
 {
 
-    protected $listeners = ['echo-private:channel-teste, TesteEvent'=> 'teste'];
-
-    public function teste()
-    {
-        dd('ihih');
-    }
-
+    protected $listeners = ['echo-private:studentsCount,StudentCreate'=> '$refresh'];
 
     public function getCountStudentsProperty()
     {
