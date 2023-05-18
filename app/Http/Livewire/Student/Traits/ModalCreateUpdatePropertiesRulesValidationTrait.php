@@ -27,7 +27,7 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
 
     public $arrDocumentType;
 
-    public $documentType = 1;
+    public $documentType;
 
     public $resetInputFile;
 

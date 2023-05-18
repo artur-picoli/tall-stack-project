@@ -32,7 +32,9 @@ class ModalCreateUpdate extends Component
 
     public function openModal()
     {
+        $this->documentType = 1;
         $this->modalCreateUpdate = true;
+
     }
 
     public function closeModal()

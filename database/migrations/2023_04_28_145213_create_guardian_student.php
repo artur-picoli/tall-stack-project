@@ -11,10 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('guardian_student', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('guardian_id');
-            $table->foreignId('student_id');
+
+            $table->integer('guardian_id')->unsigned();
+
+            $table->integer('student_id')->unsigned();
+
+            $table->foreign('guardian_id')->references('id')->on('guardians')
+
+                ->onDelete('cascade');
+
+            $table->foreign('student_id')->references('id')->on('students')
+
+                ->onDelete('cascade');
+
+            $table->tinyInteger('type');
+
             $table->timestamps();
         });
     }

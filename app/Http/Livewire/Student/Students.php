@@ -43,7 +43,6 @@ class Students extends Component
             'icon'        => 'success'
         ]);
 
-        $this->reset();
     }
 
     public function paginationView()
