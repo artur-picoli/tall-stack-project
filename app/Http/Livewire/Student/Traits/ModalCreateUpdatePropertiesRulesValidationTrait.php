@@ -17,13 +17,13 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
 
     public $email;
 
-    public $modalCreateUpdate;
+    public $studentModalCreateUpdate;
 
     public $editPhoto;
 
     public $currentPhoto;
 
-    public  $studentId;
+    public $studentId;
 
     public $arrDocumentType;
 

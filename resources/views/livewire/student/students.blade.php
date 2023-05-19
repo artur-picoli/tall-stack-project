@@ -5,7 +5,7 @@
     </div>
     <div class="flex flex-col justify-between py-4 bg-white dark:bg-gray-800 md:flex-row md:items-center">
         <div class="mb-4 md:mb-0 md:order-1">
-            <x-button icon="plus" primary label="Novo do Aluno" wire:click="$emit('openModal')" />
+            <x-button icon="plus" primary label="Novo do Aluno" wire:click="$emit('openStudentModalCreateUpdate')" />
         </div>
         <div class="md:order-2">
             <x-input icon="search" wire:model="search" placeholder="Nome do aluno" />
@@ -40,12 +40,12 @@
                             <th scope="row"
                                 class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                 @if ($student->photo)
-                                    <img class="w-12 h-12 rounded-full" src="{{ asset($student->photo) }}"
+                                    <img class="w-10 h-10 rounded-full" src="{{ asset($student->photo) }}"
                                         alt="Extra large avatar">
                                 @else
                                     <div
-                                        class="relative w-12 h-12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                        <svg class="absolute w-14 h-14 text-gray-400 -left-1" fill="currentColor"
+                                        class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                        <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor"
                                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd"
                                                 d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
@@ -67,7 +67,8 @@
                                 {{ format_phone($student->phone) }}
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <x-button icon="users"  primary label="Responsáveis" wire:click="$emit('openModalBindGuardianStudent', {{ $student }})" />
+                                <x-button icon="users" primary label="Responsáveis"
+                                    wire:click="$emit('openModalBindGuardianStudent', {{ $student }})" />
                             </td>
                             <td class="px-6 gap-3 py-4 text-right">
                                 <x-dropdown>

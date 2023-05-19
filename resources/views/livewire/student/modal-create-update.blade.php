@@ -1,5 +1,5 @@
 <div>
-    <x-modal.card title="Cadastro de Aluno" blur wire:model="modalCreateUpdate" x-on:close="closeModal">
+    <x-modal.card title="Cadastro de Aluno" blur wire:model="studentModalCreateUpdate" x-on:close="closeModal">
         <div class="grid grid-cols-1 gap-4">
             <form wire:submit.prevent="save" class="space-y-6">
                 @if ($this->studentId)
@@ -51,7 +51,7 @@
     </x-modal.card>
     <script>
         function closeModal() {
-            Livewire.emit('closeModal')
+            Livewire.emit('closeStudentModalCreateUpdate')
         }
     </script>
 </div>

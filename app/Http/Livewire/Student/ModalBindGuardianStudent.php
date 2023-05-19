@@ -19,9 +19,11 @@ class ModalBindGuardianStudent extends Component
 
     public $arrGuardians;
 
+    public $selectedGuardian;
+
     protected $listeners = [
         'openModalBindGuardianStudent',
-        'closeModal'
+        'closeModalBindGuardianStudent'
     ];
 
     public function mount()
@@ -30,6 +32,8 @@ class ModalBindGuardianStudent extends Component
         $this->arrGuardians = Guardian::all();
     }
 
+
+
     public function openModalBindGuardianStudent(Student $student)
     {
         $this->student = $student;
@@ -37,7 +41,7 @@ class ModalBindGuardianStudent extends Component
         $this->modalBindGuardianStudent = true;
     }
 
-    public function closeModal()
+    public function closeModalBindGuardianStudent()
     {
         $this->resetErrorBag();
     }

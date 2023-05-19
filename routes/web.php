@@ -11,6 +11,8 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\GuardianSearch;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
