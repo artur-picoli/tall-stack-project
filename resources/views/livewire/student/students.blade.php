@@ -60,15 +60,15 @@
                                 </div>
                             </th>
                             <td class="px-6 py-4">
-                                {{ $student->getDocumentTypeLabelAttribute() }}:
-                                {{ format_document($student->identification_document, $student->document_type) }}
+                                {{ $student->document_type }}:
+                                {{ format_document($student->identification_document, $student->getRawOriginal('document_type')) }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ format_phone($student->phone) }}
                             </td>
-                            <td class="px-6 py-4 text-right">
+                            <td class="px-6 py-4">
                                 <x-button icon="users" primary label="Responsáveis"
-                                    wire:click="$emit('openModalBindGuardianStudent', {{ $student }})" />
+                                    wire:click="$emit('openModalBindGuardianStudent', {{ $student->id }})" />
                             </td>
                             <td class="px-6 gap-3 py-4 text-right">
                                 <x-dropdown>

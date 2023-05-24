@@ -57,8 +57,8 @@
                                 </div>
                             </th>
                             <td class="px-6 py-4">
-                                {{ $guardian->getDocumentTypeLabelAttribute() }}:
-                                {{ format_document($guardian->identification_document, $guardian->document_type) }}
+                                {{ $guardian->document_type }}:
+                                {{ format_document($guardian->identification_document, $guardian->getRawOriginal('document_type')) }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ format_phone($guardian->phone) }}

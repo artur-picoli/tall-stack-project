@@ -38,7 +38,7 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
         return [
             'identification_document' => ['required', Rule::unique(Guardian::class, 'identification_document')->ignore($this->guardianId), $cpf],
             'name' => ['required'],
-            'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
+            'photo' => ['required', 'mimes:jpg,png', 'max:10000'],
             'editPhoto' => ['nullable', 'mimes:jpg,png', 'max:10000'],
             'documentType' => ['required'],
             'phone' => ['min:11'],

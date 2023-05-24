@@ -102,7 +102,7 @@ class ModalCreateUpdate extends Component
             'phone' => $guardian->phone,
             'currentPhoto' => $guardian->photo,
             'identification_document' => $guardian->identification_document,
-            'documentType' => $guardian->document_type,
+            'documentType' => $guardian->getRawOriginal('document_type'),
             'modalCreateUpdate' => true
         ]);
     }

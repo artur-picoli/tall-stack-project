@@ -106,7 +106,7 @@ class ModalCreateUpdate extends Component
             'phone' => $student->phone,
             'currentPhoto' => $student->photo,
             'identification_document' => $student->identification_document,
-            'documentType' => $student->document_type,
+            'documentType' => $student->getRawOriginal('document_type'),
             'studentModalCreateUpdate' => true
         ]);
     }

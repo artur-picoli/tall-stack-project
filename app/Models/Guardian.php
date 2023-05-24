@@ -21,19 +21,19 @@ class Guardian extends Model
         'observation'
     ];
 
-    protected $documentTypeLabels = [
-        1 => 'CPF',
-        2 => 'RG',
-        3 => 'N° Doc',
-    ];
-
-    public function getDocumentTypeLabelAttribute()
+    public function getDocumentTypeAttribute($value)
     {
-        return $this->documentTypeLabels[$this->attributes['document_type']];
+        $documentTypes = [
+            1 => 'CPF',
+            2 => 'RG',
+            3 => 'N° Doc',
+        ];
+
+        return $documentTypes[$value] ?? '';
     }
 
     public function students() : BelongsToMany
     {
-        return $this->belongsToMany(Student::class, 'guardian_student', 'guardian_id' , 'student_id');
+        return $this->belongsToMany(Student::class)->using(GuardianStudent::class)->withPivot('type')->withTimestamps();
     }
 }
