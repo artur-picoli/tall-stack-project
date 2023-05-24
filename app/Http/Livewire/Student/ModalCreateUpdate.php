@@ -15,8 +15,8 @@ class ModalCreateUpdate extends Component
     use WithFileUploads, Actions, ModalCreateUpdatePropertiesRulesValidationTrait;
 
     protected $listeners = [
-        'openModal',
-        'closeModal',
+        'openStudentModalCreateUpdate',
+        'closeStudentModalCreateUpdate',
         'newPhoto',
         'edit'
     ];
@@ -30,12 +30,14 @@ class ModalCreateUpdate extends Component
         ];
     }
 
-    public function openModal()
+    public function openStudentModalCreateUpdate()
     {
-        $this->modalCreateUpdate = true;
+        $this->documentType = 1;
+        $this->studentModalCreateUpdate = true;
+
     }
 
-    public function closeModal()
+    public function closeStudentModalCreateUpdate()
     {
         $this->resetExcept('arrDocumentType', 'resetInputFile');
         $this->resetErrorBag();
@@ -104,8 +106,8 @@ class ModalCreateUpdate extends Component
             'phone' => $student->phone,
             'currentPhoto' => $student->photo,
             'identification_document' => $student->identification_document,
-            'documentType' => $student->document_type,
-            'modalCreateUpdate' => true
+            'documentType' => $student->getRawOriginal('document_type'),
+            'studentModalCreateUpdate' => true
         ]);
     }
 

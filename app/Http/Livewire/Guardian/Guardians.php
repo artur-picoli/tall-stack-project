@@ -53,7 +53,7 @@ class Guardians extends Component
 
     public function getGuardiansProperty()
     {
-        return Guardian::where('name', 'like', "%{$this->search}%")->latest()->paginate(5);
+        return Guardian::where('name', 'like', "%{$this->search}%")->latest()->paginate(10);
     }
 
     public function render()

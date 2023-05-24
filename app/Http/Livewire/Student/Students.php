@@ -35,6 +35,8 @@ class Students extends Component
             Storage::delete($student->photo);
         }
 
+        $student->guardians()->detach();
+
         $student->delete();
 
         $this->notification([
@@ -44,6 +46,7 @@ class Students extends Component
         ]);
 
         $this->reset();
+
     }
 
     public function paginationView()
@@ -53,7 +56,7 @@ class Students extends Component
 
     public function getStudentsProperty()
     {
-        return Student::where('name', 'like', "%{$this->search}%")->latest()->paginate(5);
+        return Student::where('name', 'like', "%{$this->search}%")->latest()->paginate(10);
     }
 
     public function render()

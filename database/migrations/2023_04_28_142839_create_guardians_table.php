@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('document_photo')->nullable();
             $table->text('observation')->nullable();
-            $table->tinyInteger('type');
             $table->timestamps();
         });
     }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Livewire\Home;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Auth\Register;
@@ -12,6 +11,7 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\GuardianSearch;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +23,6 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
@@ -64,5 +62,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('profile','livewire.profile.profile')->name('perfil');
     Route::get('guardians', Guardians::class)->name('responsaveis');
     Route::get('students', Students::class)->name('alunos');
-
 });
