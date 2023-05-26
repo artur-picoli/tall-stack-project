@@ -1,4 +1,4 @@
-@section('title', 'Reset password')
+@section('title', 'Redefinir senha')
 
 <div
     class="mx-auto mt-16 w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">

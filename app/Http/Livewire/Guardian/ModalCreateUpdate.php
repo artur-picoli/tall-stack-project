@@ -56,16 +56,12 @@ class ModalCreateUpdate extends Component
 
     public function updatedPhoto()
     {
-        $this->validate([
-            'photo' => 'nullable|mimes:jpg,png|max:10000',
-        ]);
+        $this->validateOnly('photo');
     }
 
     public function updatedEditPhoto()
     {
-        $this->validate([
-            'editPhoto' => 'nullable|mimes:jpg,png|max:10000',
-        ]);
+        $this->validateOnly('editPhoto');
     }
 
     public function save()
@@ -109,7 +105,7 @@ class ModalCreateUpdate extends Component
 
     public function update($id)
     {
-        $this->validate();
+;        $this->validate();
 
         $guardian = Guardian::find($id);
 

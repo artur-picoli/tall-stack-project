@@ -44,7 +44,7 @@ class ModalBindGuardianStudent extends Component
 
     public function updatedOpenSearchGuardian($value)
     {
-        if ($value == true) {
+        if ($value) {
             $this->reset('searchGuardian');
         }
     }

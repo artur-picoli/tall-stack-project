@@ -17,11 +17,14 @@ class EditPassword extends Component
 
     public string $passwordConfirmation = '';
 
+    public string $currentPassword = '';
+
     public function rules()
     {
         return [
             'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:passwordConfirmation'],
-            'passwordConfirmation' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:password']
+            'passwordConfirmation' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:password'],
+            'currentPassword' => ['required']
         ];
     }
 

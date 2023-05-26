@@ -30,17 +30,9 @@
                         @endif
                     </div>
                 </div>
-                <div class="w-full">
-                    <div>
-                        <x-inputs.maskable icon="phone" mask="(##)#####-####" wire:model.lazy="phone"
-                            label="Celular" />
-                    </div>
-                </div>
-                <div class="w-full">
-                    <div>
-                        <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" />
-                    </div>
-                </div>
+                <x-inputs.maskable icon="phone" mask="(##)#####-####" wire:model.lazy="phone" label="Celular" />
+
+                <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" />
         </div>
         <x-slot name="footer">
             <div class="text-end">
