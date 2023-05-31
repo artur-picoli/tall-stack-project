@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Profile;
 
+use App\Rules\CurrentPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -24,7 +25,7 @@ class EditPassword extends Component
         return [
             'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:passwordConfirmation'],
             'passwordConfirmation' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:password'],
-            'currentPassword' => ['required']
+            'currentPassword' => ['required', new CurrentPassword]
         ];
     }
 
@@ -38,14 +39,13 @@ class EditPassword extends Component
 
         $user->save();
 
-        $this->reset(['password', 'passwordConfirmation']);
+        $this->reset();
 
-        $this->notification()->success(
-            $title = 'Senha salva!',
-            $description = 'Seu senha foi alterada com sucesso! ;)'
-        );
-
-
+        $this->notification([
+            'title'       => 'Senha salva!',
+            'description' => 'Seu senha foi alterada com sucesso! ;)',
+            'icon'        => 'success'
+        ]);
     }
 
     public function render()

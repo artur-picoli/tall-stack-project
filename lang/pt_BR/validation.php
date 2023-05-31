@@ -155,6 +155,7 @@ return [
         'created_at'               => 'criado em',
         'creator'                  => 'criador',
         'current_password'         => 'senha atual',
+        'currentPassword'          => 'senha atual',
         'date'                     => 'data',
         'date_of_birth'            => 'data de nascimento',
         'day'                      => 'dia',

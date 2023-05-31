@@ -18,7 +18,7 @@ class LogoutTest extends TestCase
         $this->be($user);
 
         $this->post(route('logout'))
-            ->assertRedirect(route('inicio'));
+            ->assertRedirect(route('login'));
 
         $this->assertFalse(Auth::check());
     }

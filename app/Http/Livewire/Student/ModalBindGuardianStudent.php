@@ -6,11 +6,12 @@ use App\Models\Guardian;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Livewire\WithPagination;
 use WireUi\Traits\Actions;
 
 class ModalBindGuardianStudent extends Component
 {
-    use Actions;
+    use Actions, WithPagination;
 
     public $modalBindGuardianStudent;
 
@@ -130,7 +131,7 @@ class ModalBindGuardianStudent extends Component
             return $query->where('name', 'like', "%{$this->searchGuardian}%")
                 ->whereDoesntHave('students', function (Builder $query) {
                     $query->where('id', $this->student->id);
-                })->latest()->get();
+                })->latest()->simplePaginate(5);
         }, function () {
             return [];
         });
@@ -139,6 +140,11 @@ class ModalBindGuardianStudent extends Component
     public function getArrBoundGuardianProperty()
     {
         return $this->student->guardians->sortBy('created_at');
+    }
+
+    public function paginationView()
+    {
+        return 'livewire::pagination-links';
     }
 
     public function render()
