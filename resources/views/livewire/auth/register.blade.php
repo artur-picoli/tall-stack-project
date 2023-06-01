@@ -11,6 +11,6 @@
 
         <x-inputs.password icon="lock-closed" wire:model.lazy="passwordConfirmation" label="Confirme sua Senha" />
 
-        <x-long-button wireTarget="register" buttonText="Cadastrar" />
+        <x-button class="w-full" primary label="Cadastrar" wire:click="register" spinner="register" />
     </form>
 </div>

@@ -26,7 +26,6 @@
                     </a>
                 </div>
             </div>
-
-            <x-long-button wireTarget="authenticate" buttonText="Entrar" />
+            <x-button class="w-full" primary label="Entrar" wire:click="authenticate" spinner="authenticate" />
         </form>
 </div>

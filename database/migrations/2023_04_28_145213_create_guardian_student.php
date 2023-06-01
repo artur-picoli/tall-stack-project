@@ -13,18 +13,9 @@ return new class extends Migration
     {
 
         Schema::create('guardian_student', function (Blueprint $table) {
+            $table->foreignId('guardian_id')->constrained()->onDelete('cascade');
 
-            $table->integer('guardian_id')->unsigned();
-
-            $table->integer('student_id')->unsigned();
-
-            $table->foreign('guardian_id')->references('id')->on('guardians')
-
-                ->onDelete('cascade');
-
-            $table->foreign('student_id')->references('id')->on('students')
-
-                ->onDelete('cascade');
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
 
             $table->tinyInteger('type');
 

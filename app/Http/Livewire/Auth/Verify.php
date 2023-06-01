@@ -9,6 +9,13 @@ class Verify extends Component
 {
     public bool $resent = false;
 
+    public function mount()
+    {
+        if (Auth::user()->hasVerifiedEmail()) {
+            redirect(route('inicio'));
+        }
+    }
+
     public function resend()
     {
         if (Auth::user()->hasVerifiedEmail()) {

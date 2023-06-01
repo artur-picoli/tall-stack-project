@@ -23,7 +23,8 @@
                     placeholder="example@example.com.br" />
             </div>
             <div class="mt-6">
-                <x-long-button wireTarget="sendResetPasswordLink" buttonText="Enviar e-mail de redefinição" />
+                <x-button class="w-full" primary label="Enviar e-mail de redefinição" wire:click="sendResetPasswordLink"
+                    spinner="sendResetPasswordLink" />
             </div>
         </form>
     @endif

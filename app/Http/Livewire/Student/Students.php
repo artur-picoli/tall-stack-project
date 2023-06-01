@@ -20,7 +20,8 @@ class Students extends Component
     {
         $this->dialog()->confirm([
             'title'       => 'Você tem certeza?',
-            'description' => 'Deseja mesmo excluir o aluno(a) ' . $student->name . '?',
+            'description' => 'Deseja mesmo excluir o aluno(a) ' . $student->name . '?
+            Todos os vínculos com responsáveis também serão removidos!',
             'icon'        => 'question',
             'acceptLabel' => 'Sim',
             'rejectLabel' => 'Não',
@@ -31,11 +32,9 @@ class Students extends Component
 
     public function destroy(Student $student)
     {
-        if($student->photo && Storage::exists($student->photo)){
+        if ($student->photo && Storage::exists($student->photo)) {
             Storage::delete($student->photo);
         }
-
-        $student->guardians()->detach();
 
         $student->delete();
 
@@ -46,7 +45,6 @@ class Students extends Component
         ]);
 
         $this->reset();
-
     }
 
     public function paginationView()

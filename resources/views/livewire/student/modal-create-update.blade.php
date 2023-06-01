@@ -19,8 +19,8 @@
                     </div>
                     <div class="w-1/2">
                         @if ($documentType == 1)
-                            <x-input-cpf icon="identification" wire:model.lazy="identification_document" label="CPF"
-                                id="cpf" />
+                            <x-inputs.maskable icon="identification" mask="###.###.###-##"
+                                wire:model.lazy="identification_document" label="CPF" id="cpf" />
                         @elseif($documentType == 2)
                             <x-inputs.maskable icon="identification" mask="XXXXXXXXXXXXXXX"
                                 wire:model.lazy="identification_document" label="RG" id="rg" />

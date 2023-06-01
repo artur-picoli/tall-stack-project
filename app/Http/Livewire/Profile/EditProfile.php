@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Profile;
 
 use App\Models\User;
-use App\Rules\CurrentPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -31,7 +30,7 @@ class EditProfile extends Component
             'email' => ['required', 'email', Rule::unique(User::class)->ignore(Auth::user()->id)],
             'name' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
-            'currentPassword' => ['required', new CurrentPassword]
+            'currentPassword' => ['required', 'current_password:web']
         ];
     }
 

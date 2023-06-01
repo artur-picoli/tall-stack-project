@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="mt-6">
-            <x-long-link-button href="home" textButton="Entrar" />
+            <x-button class="w-full" primary label="Entrar"  href="{{ route('inicio') }}"/>
         </div>
     @else
         <form wire:submit.prevent="resetPassword" class="space-y-6">
@@ -30,7 +30,8 @@
 
             <x-inputs.password icon="lock-closed" wire:model.lazy="passwordConfirmation" label="Confirme sua Senha" />
 
-            <x-long-button wireTarget="resetPassword" buttonText="Redefinir" />
+            <x-button class="w-full" primary label="Redefinir" wire:click="resetPassword" spinner="resetPassword" />
+
         </form>
     @endif
 </div>

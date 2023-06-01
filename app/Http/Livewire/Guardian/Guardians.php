@@ -20,7 +20,8 @@ class Guardians extends Component
     {
         $this->dialog()->confirm([
             'title'       => 'Você tem certeza?',
-            'description' => 'Deseja mesmo excluir o(a) responsável ' . $guardian->name . '?',
+            'description' => 'Deseja mesmo excluir o(a) responsável ' . $guardian->name . '?
+            Todos os vínculos com alunos também serão removidos!',
             'icon'        => 'question',
             'acceptLabel' => 'Sim',
             'rejectLabel' => 'Não',
@@ -31,7 +32,7 @@ class Guardians extends Component
 
     public function destroy(Guardian $guardian)
     {
-        if($guardian->photo && Storage::exists($guardian->photo)){
+        if ($guardian->photo && Storage::exists($guardian->photo)) {
             Storage::delete($guardian->photo);
         }
 
