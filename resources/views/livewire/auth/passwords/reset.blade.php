@@ -1,4 +1,4 @@
-@section('title', 'Reset password')
+@section('title', 'Redefinir senha')
 
 <div
     class="mx-auto mt-16 w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -17,28 +17,21 @@
             </div>
         </div>
         <div class="mt-6">
-            <x-long-link-button href="home" textButton="Entrar" />
-
+            <x-button class="w-full" primary label="Entrar"  href="{{ route('inicio') }}"/>
         </div>
     @else
-        <form wire:submit.prevent="resetPassword">
+        <form wire:submit.prevent="resetPassword" class="space-y-6">
             <input wire:model="token" type="hidden">
-            <div>
-                <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" readonly
-                    placeholder="example@example.com.br" />
-            </div>
-            <div class="mt-6">
-                <x-inputs.password icon="lock-closed" wire:model.lazy="password" label="Senha" />
-            </div>
-            <div class="mt-6">
-                <x-inputs.password icon="lock-closed" wire:model.lazy="passwordConfirmation"
-                    label="Confirme sua Senha" />
-            </div>
-            <div class="mt-6">
-                <div class="mt-6">
-                    <x-long-button wireTarget="resetPassword" buttonText="Redefinir" />
-                </div>
-            </div>
+
+            <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" readonly
+                placeholder="example@example.com.br" />
+
+            <x-inputs.password icon="lock-closed" wire:model.lazy="password" label="Senha" />
+
+            <x-inputs.password icon="lock-closed" wire:model.lazy="passwordConfirmation" label="Confirme sua Senha" />
+
+            <x-button class="w-full" primary label="Redefinir" wire:click="resetPassword" spinner="resetPassword" />
+
         </form>
     @endif
 </div>

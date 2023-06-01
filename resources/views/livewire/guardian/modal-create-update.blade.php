@@ -7,11 +7,7 @@
                 @else
                     @include('livewire.guardian.photo-create-form')
                 @endif
-                <div class="w-full ">
-                    <div>
-                        <x-input icon="user" wire:model.lazy="name" label="Nome" />
-                    </div>
-                </div>
+                <x-input icon="user" wire:model.lazy="name" label="Nome" />
                 <div class="flex w-full gap-3 ">
                     <div class="w-1/2">
                         <x-select label="Tipo de Documento" :options="$arrDocumentType" option-label="name" option-value="id"
@@ -19,8 +15,8 @@
                     </div>
                     <div class="w-1/2">
                         @if ($documentType == 1)
-                            <x-input-cpf icon="identification" wire:model.lazy="identification_document" label="CPF"
-                                id="cpf" />
+                            <x-inputs.maskable icon="identification" mask="###.###.###-##"
+                                wire:model.lazy="identification_document" label="CPF" id="cpf" />
                         @elseif($documentType == 2)
                             <x-inputs.maskable icon="identification" mask="XXXXXXXXXXXXXXX"
                                 wire:model.lazy="identification_document" label="RG" id="rg" />
@@ -30,17 +26,9 @@
                         @endif
                     </div>
                 </div>
-                <div class="w-full">
-                    <div>
-                        <x-inputs.maskable icon="phone" mask="(##)#####-####" wire:model.lazy="phone"
-                            label="Celular" />
-                    </div>
-                </div>
-                <div class="w-full">
-                    <div>
-                        <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" />
-                    </div>
-                </div>
+                <x-inputs.maskable icon="phone" mask="(##)#####-####" wire:model.lazy="phone" label="Celular" />
+
+                <x-input icon="at-symbol" wire:model.lazy="email" label="E-mail" />
         </div>
         <x-slot name="footer">
             <div class="text-end">

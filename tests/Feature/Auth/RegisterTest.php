@@ -84,7 +84,7 @@ class RegisterTest extends TestCase
     /** @test */
     function email_hasnt_been_taken_already()
     {
-        User::factory()->create(['email' => 'tallstack@example.com']);
+        User::factory()->create(['email' => fake()->email()]);
 
         Livewire::test('auth.register')
             ->set('email', 'tallstack@example.com')
@@ -95,7 +95,7 @@ class RegisterTest extends TestCase
     /** @test */
     function see_email_hasnt_already_been_taken_validation_message_as_user_types()
     {
-        User::factory()->create(['email' => 'tallstack@example.com']);
+        User::factory()->create(['email' => fake()->email()]);
 
         Livewire::test('auth.register')
             ->set('email', 'smallstack@gmail.com')

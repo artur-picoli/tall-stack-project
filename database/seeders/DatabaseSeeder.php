@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Guardian;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(10)->create();
+        Guardian::factory(50)->create();
+        Student::factory(50)->hasAttached(
+            Guardian::factory()->count(5),
+            ['type' => rand(1,2)]
+        )->create();
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

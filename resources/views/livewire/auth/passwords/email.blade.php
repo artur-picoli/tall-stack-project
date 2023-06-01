@@ -1,4 +1,4 @@
-@section('title', 'Reset password')
+@section('title', 'Redefinir senha')
 
 <div
     class="mx-auto mt-16 w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -23,7 +23,8 @@
                     placeholder="example@example.com.br" />
             </div>
             <div class="mt-6">
-                <x-long-button wireTarget="sendResetPasswordLink" buttonText="Enviar e-mail de redefinição" />
+                <x-button class="w-full" primary label="Enviar e-mail de redefinição" wire:click="sendResetPasswordLink"
+                    spinner="sendResetPasswordLink" />
             </div>
         </form>
     @endif

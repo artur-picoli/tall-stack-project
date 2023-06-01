@@ -20,6 +20,8 @@ class EditProfile extends Component
 
     public string $email;
 
+    public string $currentPassword;
+
     public $userPhoto;
 
     public function rules()
@@ -27,7 +29,8 @@ class EditProfile extends Component
         return [
             'email' => ['required', 'email', Rule::unique(User::class)->ignore(Auth::user()->id)],
             'name' => ['required'],
-            'photo' => ['nullable', 'mimes:jpg,png', 'max:10000']
+            'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
+            'currentPassword' => ['required', 'current_password:web']
         ];
     }
 

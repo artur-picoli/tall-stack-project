@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Guardian\Traits;
 
 use App\Models\Guardian;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 trait ModalCreateUpdatePropertiesRulesValidationTrait
@@ -33,10 +34,12 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
 
     public function rules()
     {
-        $cpf = $this->documentType == 1 ? 'cpf' : '';
-
-        return [
-            'identification_document' => ['required', Rule::unique(Guardian::class, 'identification_document')->ignore($this->guardianId), $cpf],
+        $rules =  [
+            'identification_document' => [
+                'required',
+                Rule::unique(Guardian::class, 'identification_document')->ignore($this->guardianId),
+                $this->documentType == 1 ? 'cpf' : ''
+            ],
             'name' => ['required'],
             'photo' => ['required', 'mimes:jpg,png', 'max:10000'],
             'editPhoto' => ['nullable', 'mimes:jpg,png', 'max:10000'],
@@ -44,6 +47,12 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
             'phone' => ['min:11'],
             'email' => ['email', Rule::unique(Guardian::class, 'email')->ignore($this->guardianId)]
         ];
+
+        if ($this->guardianId) {
+            Arr::forget($rules, 'photo');
+        }
+
+        return $rules;
     }
 
     public function validationAttributes()

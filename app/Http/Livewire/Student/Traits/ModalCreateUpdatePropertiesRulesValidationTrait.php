@@ -33,10 +33,12 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
 
     public function rules()
     {
-        $cpf = $this->documentType == 1 ? 'cpf' : '';
-
         return [
-            'identification_document' => ['required', Rule::unique(Student::class, 'identification_document')->ignore($this->studentId), $cpf],
+            'identification_document' => [
+                'required',
+                Rule::unique(Student::class, 'identification_document')->ignore($this->studentId),
+                $this->documentType == 1 ? 'cpf' : ''
+            ],
             'name' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
             'editPhoto' => ['nullable', 'mimes:jpg,png', 'max:10000'],

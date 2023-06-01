@@ -17,11 +17,14 @@ class EditPassword extends Component
 
     public string $passwordConfirmation = '';
 
+    public string $currentPassword = '';
+
     public function rules()
     {
         return [
             'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:passwordConfirmation'],
-            'passwordConfirmation' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:password']
+            'passwordConfirmation' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:password'],
+            'currentPassword' => ['required', 'current_password:web']
         ];
     }
 
@@ -35,14 +38,13 @@ class EditPassword extends Component
 
         $user->save();
 
-        $this->reset(['password', 'passwordConfirmation']);
+        $this->reset();
 
-        $this->notification()->success(
-            $title = 'Senha salva!',
-            $description = 'Seu senha foi alterada com sucesso! ;)'
-        );
-
-
+        $this->notification([
+            'title'       => 'Senha salva!',
+            'description' => 'Seu senha foi alterada com sucesso! ;)',
+            'icon'        => 'success'
+        ]);
     }
 
     public function render()
