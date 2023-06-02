@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Student;
+namespace App\Http\Livewire\Guardian;
 
 use App\Models\Guardian;
 use App\Models\GuardianStudent;
@@ -16,11 +16,11 @@ class ModalBindGuardianStudent extends Component
 
     public $modalBindGuardianStudent;
 
-    public $searchGuardian;
+    public $searchStudent;
 
-    public $openSearchGuardian;
+    public $openSearchStudent;
 
-    public Student $student;
+    public Guardian $guardian;
 
     protected $listeners = [
         'openModalBindGuardianStudent',
@@ -29,88 +29,89 @@ class ModalBindGuardianStudent extends Component
 
     public function mount()
     {
-        $this->student = new Student;
-        $this->openSearchGuardian = false;
+        $this->guardian = new Guardian;
+        $this->openSearchStudent = false;
     }
 
-    public function openModalBindGuardianStudent(Student $student)
+    public function openModalBindGuardianStudent(Guardian $guardian)
     {
-        $this->student = $student;
+        $this->guardian = $guardian;
         $this->modalBindGuardianStudent = true;
     }
 
     public function closeModalBindGuardianStudent()
     {
-        $this->resetExcept('student');
+        $this->resetExcept('guardian');
     }
 
-    public function updatedOpenSearchGuardian($value)
+    public function updatedOpenSearchStudent($value)
     {
         if ($value) {
-            $this->reset('searchGuardian');
+            $this->reset('searchStudent');
         }
     }
 
-    public function confirmBindGuardian(Guardian $guardian, $type)
+    public function confirmBindStudent(Student $student, $type)
     {
         try {
-            GuardianStudent::validateMaxGuardianStudent($this->student, $guardian);
+            GuardianStudent::validateMaxGuardianStudent($student, $this->guardian);
 
             $typeDescription = $type == 1 ? 'MASTER' : 'NORMAL';
 
             $this->dialog()->confirm([
                 'title'       => 'Você tem certeza?',
-                'description' => 'Deseja mesmo vincular o(a) responsável <b> ' . $guardian->name . '</b> como responsável <b>' . $typeDescription . ' </b> do aluno(a) <b> ' . $this->student->name . '</b> ?',
+                'description' => 'Deseja mesmo vincular o aluno(a) <b> ' . $student->name . '</b> como dependente <b>' . $typeDescription . ' </b> do(a) responsável <b> ' . $this->guardian->name . '</b> ?',
                 'icon'        => 'question',
                 'acceptLabel' => 'Sim',
                 'rejectLabel' => 'Não',
                 'method'      => 'save',
-                'params'      => [$guardian->id, $type]
+                'params'      => [$student->id, $type]
             ]);
         } catch (Exception $e) {
+
             $this->dialog([
                 'title'       => 'Atenção!',
                 'description' => $e->getMessage(),
                 'icon'        => 'error'
             ]);
 
-            $this->reset('openSearchGuardian');
+            $this->reset('openSearchStudent');
         }
     }
 
-    public function save($guardianId, $type)
+    public function save($studentId, $type)
     {
-        $this->student->guardians()->attach($guardianId, ['type' => $type]);
+        $this->guardian->students()->attach($studentId, ['type' => $type]);
 
-        $this->student->refresh();
+        $this->guardian->refresh();
 
         $this->notification([
             'title'       => 'Vinculo salvo!',
-            'description' => 'Responsável vinculado com sucesso! ;)',
+            'description' => 'Aluno vinculado com sucesso! ;)',
             'icon'        => 'success'
         ]);
 
-        $this->reset('openSearchGuardian', 'searchGuardian');
+        $this->reset('openSearchStudent', 'searchStudent');
     }
 
-    public function delete(Guardian $guardian)
+    public function delete(Student $student)
     {
         $this->dialog()->confirm([
             'title'       => 'Você tem certeza?',
-            'description' => 'Deseja remover o vínculo com <b>' . $guardian->name . '</b>?',
+            'description' => 'Deseja remover o vínculo com <b>' . $student->name . '</b>?',
             'icon'        => 'question',
             'acceptLabel' => 'Sim',
             'rejectLabel' => 'Não',
             'method'      => 'destroy',
-            'params'      => $guardian
+            'params'      => $student
         ]);
     }
 
-    public function destroy(Guardian $guardian)
+    public function destroy(Student $student)
     {
-        $this->student->guardians()->detach($guardian->id);
+        $this->guardian->students()->detach($student->id);
 
-        $this->student->refresh();
+        $this->guardian->refresh();
 
         $this->notification([
             'title'       => 'Vínculo removido!',
@@ -119,14 +120,14 @@ class ModalBindGuardianStudent extends Component
         ]);
     }
 
-    public function getArrSearchGuardianProperty()
+    public function getArrSearchStudentProperty()
     {
-        return Guardian::getGuardiansBySearchIgnoringStudentId($this->searchGuardian, $this->student->id);
+        return Student::getStudentsBySearchIgnoringGuardianId($this->searchStudent, $this->guardian->id);
     }
 
-    public function getArrBoundGuardianProperty()
+    public function getArrBoundStudentProperty()
     {
-        return $this->student->guardians->reverse();
+        return $this->guardian->students->sortBy('created_at');
     }
 
     public function paginationView()
@@ -136,6 +137,6 @@ class ModalBindGuardianStudent extends Component
 
     public function render()
     {
-        return view('livewire.student.modal-bind-guardian-student');
+        return view('livewire.guardian.modal-bind-guardian-student');
     }
 }

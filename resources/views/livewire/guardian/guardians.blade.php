@@ -14,6 +14,7 @@
         </div>
     </div>
     @livewire('guardian.modal-create-update')
+    @livewire('guardian.modal-bind-guardian-student')
     @if (count($this->guardians) > 0)
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700 ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -27,6 +28,8 @@
                         </th>
                         <th scope="col" class="px-6  py-3">
                             Telefone
+                        </th>
+                        <th scope="col" class="px-6  py-3">
                         </th>
                         <th scope="col" class="px-6  py-3">
                         </th>
@@ -64,6 +67,10 @@
                             </td>
                             <td class="px-6 py-4">
                                 {{ format_phone($guardian->phone) }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <x-button icon="users" primary label="Alunos"
+                                    wire:click="$emit('openModalBindGuardianStudent', {{ $guardian->id }})" />
                             </td>
                             <td class="px-6 gap-3 py-4 text-right">
                                 <x-dropdown>
