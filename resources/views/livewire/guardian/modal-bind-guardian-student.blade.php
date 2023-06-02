@@ -1,11 +1,11 @@
 <div>
-    <x-modal.card title="Responsáveis do aluno" blur wire:model="modalBindGuardianStudent"
+    <x-modal.card title="Alunos do Responsável" blur wire:model="modalBindGuardianStudent"
         x-on:close="closeModalBindGuardianStudent">
         <div class="grid grid-cols-1">
             <div class="w-full max-w-sm bg-transparent border border-transparent rounded-lg shado mx-auto">
                 <div class="flex flex-col items-center pb-10">
-                    @if ($student->photo)
-                        <img class="w-24 h-24 mb-3 rounded-full shadow-lg mt-3" src="{{ asset($student->photo) }}"
+                    @if ($guardian->photo)
+                        <img class="w-24 h-24 mb-3 rounded-full shadow-lg mt-3" src="{{ asset($guardian->photo) }}"
                             alt="avatar" />
                     @else
                         <div class="relative w-24 h-24 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mt-3">
@@ -17,23 +17,23 @@
                             </svg>
                         </div>
                     @endif
-                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $student->name }}</h5>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $student->document_type }}:
-                        {{ format_document($student->identification_document, $student->getRawOriginal('document_type')) }}</span>
+                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $guardian->name }}</h5>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $guardian->document_type }}:
+                        {{ format_document($guardian->identification_document, $guardian->getRawOriginal('document_type')) }}</span>
                 </div>
             </div>
-            @if ($openSearchGuardian)
+            @if ($openSearchStudent)
                 <div
                     class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex items-center justify-between mb-4">
                         <div class="inline-flex items-center">
-                            <x-button.circle flat icon="arrow-left" wire:click="$set('openSearchGuardian', false)" />
+                            <x-button.circle flat icon="arrow-left" wire:click="$set('openSearchStudent', false)" />
                             <h5 class="text-lg font-bold leading-none text-gray-900 dark:text-white">Vincular
-                                Responsável
+                                Aluno
                             </h5>
                         </div>
                         <div class="inline-flex items-center">
-                            <div role="status" wire:loading wire:target="searchGuardian">
+                            <div role="status" wire:loading wire:target="searchStudent">
                                 <svg aria-hidden="true"
                                     class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,19 +46,19 @@
                                 </svg>
                                 <span class="sr-only">Loading...</span>
                             </div>
-                            <x-input icon="search" wire:model="searchGuardian" placeholder="Buscar Responsável" />
+                            <x-input icon="search" wire:model="searchStudent" placeholder="Buscar Aluno" />
                         </div>
                     </div>
-                    @if (count($this->arrSearchGuardian) > 0)
+                    @if (count($this->arrSearchStudent) > 0)
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                @foreach ($this->arrSearchGuardian as $guardian)
+                                @foreach ($this->arrSearchStudent as $student)
                                     <li class="py-3 sm:py-4">
                                         <div class="flex items-center space-x-4">
                                             <div class="flex-shrink-0">
-                                                @if ($guardian->photo)
+                                                @if ($student->photo)
                                                     <img class="w-10 h-10 rounded-full"
-                                                        src="{{ asset($guardian->photo) }}" alt="avatar">
+                                                        src="{{ asset($student->photo) }}" alt="avatar">
                                                 @else
                                                     <div
                                                         class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
@@ -75,10 +75,10 @@
                                             </div>
                                             <div class="flex-1 min-w-0">
                                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                    {{ $guardian->name }}
+                                                    {{ $student->name }}
                                                 </p>
                                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                    {{ $guardian->email }}
+                                                    {{ $student->email }}
                                                 </p>
                                             </div>
                                             <div>
@@ -88,9 +88,9 @@
                                                         Vincular como:
                                                     </p>
                                                     <x-button xs primary label="Master"
-                                                        wire:click="confirmBindGuardian({{ $guardian->id }}, 1)" />
+                                                        wire:click="confirmBindStudent({{ $student->id }}, 1)" />
                                                     <x-button xs secondary label="Normal"
-                                                        wire:click="confirmBindGuardian({{ $guardian->id }}, 2)" />
+                                                        wire:click="confirmBindStudent({{ $student->id }}, 2)" />
                                                 </div>
                                             </div>
 
@@ -100,9 +100,9 @@
                             </ul>
                         </div>
                         <div class="w-full mt-2">
-                            {{ $this->arrSearchGuardian->links() }}
+                            {{ $this->arrSearchStudent->links() }}
                         </div>
-                    @elseif (count($this->arrSearchGuardian) == 0 && !empty($this->searchGuardian))
+                    @elseif (count($this->arrSearchStudent) == 0 && !empty($this->searchStudent))
                         <div class="justify-start p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                             role="alert">
                             <div class="flex">
@@ -115,38 +115,38 @@
                                 <span class="sr-only">Info</span>
                                 <div>
                                     <span class="font-medium">
-                                        Nenhum responsável localizado. Clique no botão abaixo para ir ao cadastro de
-                                        responsáveis.
+                                        Nenhum aluno localizado. Clique no botão abaixo para ir ao cadastro de
+                                        alunos.
                                     </span>
                                 </div>
                             </div>
                             <div class="mt-2 text-center">
-                                <x-button href="{{ route('responsaveis') }}" primary label="Cadastrar" />
+                                <x-button href="{{ route('alunos') }}" primary label="Cadastrar" />
                             </div>
                         </div>
                     @endif
                 </div>
             @endif
-            @if (!$openSearchGuardian)
+            @if (!$openSearchStudent)
                 <div
                     class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex items-center justify-between mb-4">
-                        <h5 class="text-lg font-bold leading-none text-gray-900 dark:text-white">Responsáveis
+                        <h5 class="text-lg font-bold leading-none text-gray-900 dark:text-white">Alunos
                             vinculados</h5>
-                        <x-button icon="plus" primary label="Vincular Novo" spinner="openSearchGuardian"
-                            wire:click="$set('openSearchGuardian', true)" />
+                        <x-button icon="plus" primary label="Vincular Novo" spinner="openSearchStudent"
+                            wire:click="$set('openSearchStudent', true)" />
                     </div>
-                    @if (count($this->arrBoundGuardian) > 0)
+                    @if (count($this->arrBoundStudent) > 0)
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                @foreach ($this->arrBoundGuardian as $guardian)
+                                @foreach ($this->arrBoundStudent as $student)
                                     <li class="py-3 sm:py-3">
                                         <div class="flex items-center space-x-4">
                                             <div class="flex-shrink-0">
                                                 <div class="flex-shrink-0">
-                                                    @if ($guardian->photo)
+                                                    @if ($student->photo)
                                                         <img class="w-10 h-10 rounded-full"
-                                                            src="{{ asset($guardian->photo) }}" alt="avatar">
+                                                            src="{{ asset($student->photo) }}" alt="avatar">
                                                     @else
                                                         <div
                                                             class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
@@ -164,17 +164,17 @@
                                             </div>
                                             <div class="flex-1 min-w-0">
                                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                    {{ $guardian->name }}
+                                                    {{ $student->name }}
                                                 </p>
                                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                    {{ $guardian->email }}
+                                                    {{ $student->email }}
                                                 </p>
                                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                    {{ $guardian->document_type }}:
-                                                    {{ format_document($guardian->identification_document, $guardian->getRawOriginal('document_type')) }}
+                                                    {{ $student->document_type }}:
+                                                    {{ format_document($student->identification_document, $student->getRawOriginal('document_type')) }}
                                                 </p>
                                                 <p class="truncate ">
-                                                    @if ($guardian->pivot->type == 1)
+                                                    @if ($student->pivot->type == 1)
                                                         <x-badge primary label="Master" />
                                                     @else
                                                         <x-badge secondary label="Normal" />
@@ -183,7 +183,7 @@
                                             </div>
                                             <div>
                                                 <x-button negative icon="trash"
-                                                    wire:click="delete({{ $guardian->id }})" />
+                                                    wire:click="delete({{ $student->id }})" />
                                             </div>
                                         </div>
                                     </li>
@@ -201,7 +201,7 @@
                             </svg>
                             <span class="sr-only">Info</span>
                             <div>
-                                <span class="font-medium">Nenhum responsável vinculado</span>
+                                <span class="font-medium">Nenhum aluno vinculado</span>
                             </div>
                         </div>
                     @endif

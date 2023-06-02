@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Pagination\Paginator;
 
 class Guardian extends Model
 {
@@ -32,7 +33,27 @@ class Guardian extends Model
         return $documentTypes[$value] ?? '';
     }
 
-    public function students() : BelongsToMany
+    /**
+     * Localiza responsáveis pelo nome, ignorando os reponsáveis já vinculados com o $student_id passado como parâmetro.
+     *
+     * @param string|null $search
+     * @param int $student_id
+     * @return Paginator|array
+     */
+
+    static function getGuardiansBySearchIgnoringStudentId($search, $student_id)
+    {
+        return static::query()->when($search, function ($query, $search) use ($student_id) {
+            return $query->where('name', 'like', "%{$search}%")
+                ->whereDoesntHave('students', function ($query) use ($student_id) {
+                    return $query->where('id', $student_id);
+                })->latest()->simplePaginate(5);
+        }, function () {
+            return [];
+        });
+    }
+
+    public function students(): BelongsToMany
     {
         return $this->belongsToMany(Student::class)->using(GuardianStudent::class)->withPivot('type')->withTimestamps();
     }
