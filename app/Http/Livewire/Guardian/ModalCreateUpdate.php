@@ -105,7 +105,7 @@ class ModalCreateUpdate extends Component
 
     public function update($id)
     {
-;        $this->validate();
+        $this->validate();
 
         $guardian = Guardian::find($id);
 
