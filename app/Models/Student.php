@@ -46,7 +46,7 @@ class Student extends Model
         return static::query()->when($search, function ($query, $search) use ($guardian_id) {
             return $query->where('name', 'like', "%{$search}%")
                 ->whereDoesntHave('guardians', function ($query) use ($guardian_id) {
-                    return $query->where('id', $guardian_id);
+                    return $query->where('guardian_id', $guardian_id);
                 })->latest()->simplePaginate(5);
         }, function () {
             return [];

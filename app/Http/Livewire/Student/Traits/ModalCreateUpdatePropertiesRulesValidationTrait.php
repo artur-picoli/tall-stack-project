@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Student\Traits;
 
 use App\Models\Student;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 trait ModalCreateUpdatePropertiesRulesValidationTrait
@@ -27,39 +28,45 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
 
     public $arrDocumentType;
 
-    public $documentType;
+    public $document_type;
 
     public $resetInputFile;
 
     public function rules()
     {
-        return [
+        $rules =  [
             'identification_document' => [
                 'required',
                 Rule::unique(Student::class, 'identification_document')->ignore($this->studentId),
-                $this->documentType == 1 ? 'cpf' : ''
+                $this->document_type == 1 ? 'cpf' : ''
             ],
             'name' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
             'editPhoto' => ['nullable', 'mimes:jpg,png', 'max:10000'],
-            'documentType' => ['required'],
+            'document_type' => ['required'],
             'phone' => ['min:11'],
             'email' => ['email', Rule::unique(Student::class, 'email')->ignore($this->studentId)]
         ];
+
+        if ($this->studentId) {
+            Arr::forget($rules, 'photo');
+        }
+
+        return $rules;
     }
 
     public function validationAttributes()
     {
         $attributeName = 'Outro';
-        if ($this->documentType == 1) {
+        if ($this->document_type == 1) {
             $attributeName = 'CPF';
-        } elseif ($this->documentType == 2) {
+        } elseif ($this->document_type == 2) {
             $attributeName = 'RG';
         }
 
         return [
             'identification_document' => $attributeName,
-            'documentType' => 'Tipo de Documento',
+            'document_type' => 'Tipo de Documento',
             'phone' => 'Celular',
             'photo' => 'Foto do aluno',
             'editPhoto' => 'Foto do aluno'

@@ -46,7 +46,7 @@ class Guardian extends Model
         return static::query()->when($search, function ($query, $search) use ($student_id) {
             return $query->where('name', 'like', "%{$search}%")
                 ->whereDoesntHave('students', function ($query) use ($student_id) {
-                    return $query->where('id', $student_id);
+                    return $query->where('student_id', $student_id);
                 })->latest()->simplePaginate(5);
         }, function () {
             return [];

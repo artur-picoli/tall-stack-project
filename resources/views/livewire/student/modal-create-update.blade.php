@@ -15,16 +15,16 @@
                 <div class="flex w-full gap-3 ">
                     <div class="w-1/2">
                         <x-select label="Tipo de Documento" :options="$arrDocumentType" option-label="name" option-value="id"
-                            wire:model="documentType" />
+                            wire:model="document_type" />
                     </div>
                     <div class="w-1/2">
-                        @if ($documentType == 1)
+                        @if ($document_type == 1)
                             <x-inputs.maskable icon="identification" mask="###.###.###-##"
                                 wire:model.lazy="identification_document" label="CPF" id="cpf" />
-                        @elseif($documentType == 2)
+                        @elseif($document_type == 2)
                             <x-inputs.maskable icon="identification" mask="XXXXXXXXXXXXXXX"
                                 wire:model.lazy="identification_document" label="RG" id="rg" />
-                        @elseif($documentType == 3)
+                        @elseif($document_type == 3)
                             <x-inputs.maskable icon="identification" mask="XXXXXXXXXXXXXXX"
                                 wire:model.lazy="identification_document" label="Documento" id="outro" />
                         @endif
