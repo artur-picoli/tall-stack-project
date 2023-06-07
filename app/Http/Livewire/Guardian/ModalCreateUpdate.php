@@ -45,7 +45,7 @@ class ModalCreateUpdate extends Component
     public function updatedDocumentType()
     {
         $this->reset('identification_document');
-        $this->validateOnly('documentType');
+        $this->validateOnly('document_type');
         $this->resetErrorBag('identification_document');
     }
 
@@ -69,16 +69,12 @@ class ModalCreateUpdate extends Component
         if ($this->guardianId) {
             return $this->update($this->guardianId);
         }
-        $this->validate();
 
-        Guardian::create([
-            'document_type' => $this->documentType,
-            'identification_document' => $this->identification_document,
-            'name' => $this->name,
-            'photo' => optional($this->photo)->store('photos'),
-            'phone' => $this->phone,
-            'email' => $this->email
-        ]);
+        $validated = $this->validate();
+
+        $validated['photo'] = optional($validated['photo'])->store('photos');
+
+        Guardian::create($validated);
 
         $this->notification([
             'title'       => 'Responsável salvo!',
@@ -98,31 +94,25 @@ class ModalCreateUpdate extends Component
             'phone' => $guardian->phone,
             'currentPhoto' => $guardian->photo,
             'identification_document' => $guardian->identification_document,
-            'documentType' => $guardian->getRawOriginal('document_type'),
+            'document_type' => $guardian->getRawOriginal('document_type'),
             'modalCreateUpdate' => true
         ]);
     }
 
     public function update($id)
     {
-        $this->validate();
+        $validated = $this->validate();
 
         $guardian = Guardian::find($id);
 
-        if ($this->editPhoto) {
+        if ($validated['editPhoto']) {
             if ($guardian->photo && Storage::exists($guardian->photo)) {
                 Storage::delete($guardian->photo);
             }
-            $guardian->photo = $this->editPhoto->store('photos');
+            $validated['photo'] = $validated['editPhoto']->store('photos');
         }
 
-        $guardian->name = $this->name;
-        $guardian->email = $this->email;
-        $guardian->phone = $this->phone;
-        $guardian->email = $this->email;
-        $guardian->document_type = $this->documentType;
-        $guardian->identification_document = $this->identification_document;
-
+        $guardian->fill($validated);
 
         if ($guardian->isDirty()) {
             $guardian->save();

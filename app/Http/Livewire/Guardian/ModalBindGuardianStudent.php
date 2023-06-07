@@ -68,7 +68,6 @@ class ModalBindGuardianStudent extends Component
                 'params'      => [$student->id, $type]
             ]);
         } catch (Exception $e) {
-
             $this->dialog([
                 'title'       => 'Atenção!',
                 'description' => $e->getMessage(),
@@ -120,6 +119,11 @@ class ModalBindGuardianStudent extends Component
         ]);
     }
 
+    public function updatedSearchStudent()
+    {
+        $this->resetPage();
+    }
+
     public function getArrSearchStudentProperty()
     {
         return Student::getStudentsBySearchIgnoringGuardianId($this->searchStudent, $this->guardian->id);
@@ -130,10 +134,6 @@ class ModalBindGuardianStudent extends Component
         return $this->guardian->students->sortBy('created_at');
     }
 
-    public function paginationView()
-    {
-        return 'livewire::pagination-links';
-    }
 
     public function render()
     {

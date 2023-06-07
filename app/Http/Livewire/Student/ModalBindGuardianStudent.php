@@ -119,6 +119,11 @@ class ModalBindGuardianStudent extends Component
         ]);
     }
 
+    public function updatedSearchGuardian()
+    {
+        $this->resetPage();
+    }
+
     public function getArrSearchGuardianProperty()
     {
         return Guardian::getGuardiansBySearchIgnoringStudentId($this->searchGuardian, $this->student->id);
@@ -127,11 +132,6 @@ class ModalBindGuardianStudent extends Component
     public function getArrBoundGuardianProperty()
     {
         return $this->student->guardians->reverse();
-    }
-
-    public function paginationView()
-    {
-        return 'livewire::pagination-links';
     }
 
     public function render()

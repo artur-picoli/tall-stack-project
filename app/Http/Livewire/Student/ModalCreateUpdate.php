@@ -32,9 +32,8 @@ class ModalCreateUpdate extends Component
 
     public function openStudentModalCreateUpdate()
     {
-        $this->documentType = 1;
+        $this->document_type = 1;
         $this->studentModalCreateUpdate = true;
-
     }
 
     public function closeStudentModalCreateUpdate()
@@ -47,7 +46,7 @@ class ModalCreateUpdate extends Component
     public function updatedDocumentType()
     {
         $this->reset('identification_document');
-        $this->validateOnly('documentType');
+        $this->validateOnly('document_type');
         $this->resetErrorBag('identification_document');
     }
 
@@ -58,16 +57,12 @@ class ModalCreateUpdate extends Component
 
     public function updatedPhoto()
     {
-        $this->validate([
-            'photo' => 'nullable|mimes:jpg,png|max:10000',
-        ]);
+        $this->validateOnly('photo');
     }
 
     public function updatedEditPhoto()
     {
-        $this->validate([
-            'editPhoto' => 'nullable|mimes:jpg,png|max:10000',
-        ]);
+        $this->validateOnly('editPhoto');
     }
 
     public function save()
@@ -75,16 +70,12 @@ class ModalCreateUpdate extends Component
         if ($this->studentId) {
             return $this->update($this->studentId);
         }
-        $this->validate();
 
-        Student::create([
-            'document_type' => $this->documentType,
-            'identification_document' => $this->identification_document,
-            'name' => $this->name,
-            'photo' => optional($this->photo)->store('photos'),
-            'phone' => $this->phone,
-            'email' => $this->email
-        ]);
+        $validated = $this->validate();
+
+        $validated['photo'] = optional($validated['photo'])->store('photos');
+
+        Student::create($validated);
 
         $this->notification([
             'title'       => 'Aluno salvo!',
@@ -106,30 +97,27 @@ class ModalCreateUpdate extends Component
             'phone' => $student->phone,
             'currentPhoto' => $student->photo,
             'identification_document' => $student->identification_document,
-            'documentType' => $student->getRawOriginal('document_type'),
+            'document_type' => $student->getRawOriginal('document_type'),
             'studentModalCreateUpdate' => true
         ]);
     }
 
     public function update($id)
     {
-        $this->validate();
+        $validated = $this->validate();
+
+        dd($validated);
 
         $student = Student::find($id);
 
-        if ($this->editPhoto) {
+        if ($validated['editPhoto']) {
             if ($student->photo && Storage::exists($student->photo)) {
                 Storage::delete($student->photo);
             }
-            $student->photo = $this->editPhoto->store('photos');
+            $validated['photo'] = $validated['editPhoto']->store('photos');
         }
 
-        $student->name = $this->name;
-        $student->email = $this->email;
-        $student->phone = $this->phone;
-        $student->email = $this->email;
-        $student->document_type = $this->documentType;
-        $student->identification_document = $this->identification_document;
+        $student->fill($validated);
 
         if ($student->isDirty()) {
             $student->save();

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('identification_document');
             $table->tinyInteger('document_type');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('document_photo')->nullable();

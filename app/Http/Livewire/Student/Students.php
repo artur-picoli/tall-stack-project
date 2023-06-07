@@ -47,9 +47,9 @@ class Students extends Component
         $this->reset();
     }
 
-    public function paginationView()
+    public function updatedSearch()
     {
-        return 'livewire::pagination-links';
+        $this->resetPage();
     }
 
     public function getStudentsProperty()
