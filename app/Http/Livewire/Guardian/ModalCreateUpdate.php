@@ -112,7 +112,7 @@ class ModalCreateUpdate extends Component
             $validated['photo'] = $validated['editPhoto']->store('photos');
         }
 
-        $guardian->fill($validated);
+        $guardian->fill(array_filter($validated));
 
         if ($guardian->isDirty()) {
             $guardian->save();
@@ -132,7 +132,7 @@ class ModalCreateUpdate extends Component
         $this->resetExcept('arrDocumentType');
         $this->resetErrorBag();
         $this->resetInputFile++;
-        $this->emit('refresh');
+        $this->emitTo('guardian.guardians','refresh');
     }
 
     public function render()

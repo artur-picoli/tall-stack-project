@@ -16,7 +16,7 @@
                 <a href="{{ route('inicio') }}" class="flex ml-2 md:mr-24">
                     <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
                     <span
-                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Shield</span>
+                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">TALL</span>
                 </a>
             </div>
             <div class="flex items-center">
@@ -29,19 +29,7 @@
                             class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-700"
                             aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
-                            @if (auth()->user()->photo)
-                                <img class="w-8 h-8 rounded-full" src="{{ asset(Auth::user()->photo) }}"
-                                    alt="user photo">
-                            @else
-                                <div class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                    <svg class="absolute w-10 h-10 text-gray-400 -left-1" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
-                                        </path>
-                                    </svg>
-                                </div>
-                            @endif
+                            @livewire('profile.profile-photo')
                         </button>
                     </div>
                     <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"

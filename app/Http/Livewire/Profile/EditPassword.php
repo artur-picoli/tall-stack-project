@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Profile;
 
+use App\Rules\PasswordRule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -22,19 +22,19 @@ class EditPassword extends Component
     public function rules()
     {
         return [
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:passwordConfirmation'],
-            'passwordConfirmation' => ['required', Password::min(8)->mixedCase()->numbers()->symbols(), 'same:password'],
+            'password' => ['required', New PasswordRule, 'same:passwordConfirmation'],
+            'passwordConfirmation' => ['required','same:password'],
             'currentPassword' => ['required', 'current_password:web']
         ];
     }
 
     public function save()
     {
-        $this->validate();
+        $validated = $this->validate();
 
         $user = Auth::user();
 
-        $user->password = Hash::make($this->password);
+        $user->password = Hash::make($validated['password']);
 
         $user->save();
 
