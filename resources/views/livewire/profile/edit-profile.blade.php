@@ -45,7 +45,7 @@
 
         <x-input wire:model.lazy="email" label="E-mail" />
 
-        <x-inputs.password  wire:model.lazy="currentPassword" label="Confirme sua senha" placeholder="" />
+        <x-inputs.password  wire:model.lazy="passwordConfirm" label="Confirme sua senha" placeholder="" />
 
         <x-button wire:click="update" spinner="update" primary label="Salvar" />
     </form>

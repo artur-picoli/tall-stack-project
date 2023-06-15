@@ -3,12 +3,12 @@
 namespace App\Http\Livewire\Profile;
 
 use App\Models\User;
+use Livewire\Component;
+use WireUi\Traits\Actions;
+use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use WireUi\Traits\Actions;
 
 class EditProfile extends Component
 {
@@ -20,7 +20,7 @@ class EditProfile extends Component
 
     public string $email;
 
-    public string $currentPassword;
+    public $passwordConfirm;
 
     public $userPhoto;
 
@@ -30,7 +30,7 @@ class EditProfile extends Component
             'email' => ['required', 'email', Rule::unique(User::class)->ignore(Auth::user()->id)],
             'name' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,png', 'max:10000'],
-            'currentPassword' => ['required', 'current_password:web']
+            'passwordConfirm' => ['required', 'current_password:web']
         ];
     }
 
@@ -50,19 +50,18 @@ class EditProfile extends Component
 
     public function update()
     {
-        $this->validate();
+        $validated = $this->validate();
 
         $user = Auth::user();
-        $user->email = $this->email;
-        $user->name = $this->name;
 
-        if ($user->photo) {
-            if ($this->photo && Storage::exists($user->photo)) {
+        if ($validated['photo']) {
+            if ($user->photo && Storage::exists($user->photo)) {
                 Storage::delete($user->photo);
             }
+            $validated['photo'] = $validated['photo']->store('photos');
         }
 
-        $user->photo = optional($this->photo)->store('photos');
+        $user->fill(array_filter($validated));
 
         if ($user->isDirty()) {
             $user->save();
@@ -73,6 +72,10 @@ class EditProfile extends Component
             'description' => 'Seu perfil foi salvo com sucesso! ;)',
             'icon'        => 'success'
         ]);
+
+        $this->emitTo('profile.profile-photo', 'refreshPhoto');
+
+        $this->reset('passwordConfirm');
     }
 
     public function render()

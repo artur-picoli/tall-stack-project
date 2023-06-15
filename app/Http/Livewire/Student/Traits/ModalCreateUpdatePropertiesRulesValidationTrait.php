@@ -34,7 +34,7 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
 
     public function rules()
     {
-        $rules =  [
+        return [
             'identification_document' => [
                 'required',
                 Rule::unique(Student::class, 'identification_document')->ignore($this->studentId),
@@ -47,12 +47,6 @@ trait ModalCreateUpdatePropertiesRulesValidationTrait
             'phone' => ['min:11'],
             'email' => ['email', Rule::unique(Student::class, 'email')->ignore($this->studentId)]
         ];
-
-        if ($this->studentId) {
-            Arr::forget($rules, 'photo');
-        }
-
-        return $rules;
     }
 
     public function validationAttributes()

@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Auth\Passwords;
 
-use App\Providers\RouteServiceProvider;
 use Livewire\Component;
+use App\Rules\PasswordRule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -38,8 +38,8 @@ class Reset extends Component
         $this->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|same:passwordConfirmation',
-            'passwordConfirmation' => 'required|min:8|same:password'
+            'password' => ['required', New PasswordRule, 'same:passwordConfirmation'],
+            'passwordConfirmation' => 'required|same:password'
         ]);
 
         $response = $this->broker()->reset(

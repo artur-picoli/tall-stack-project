@@ -16,7 +16,7 @@ class ModalCreateUpdate extends Component
 
     protected $listeners = [
         'openStudentModalCreateUpdate',
-        'closeStudentModalCreateUpdate',
+        'closeModal',
         'newPhoto',
         'edit'
     ];
@@ -36,7 +36,7 @@ class ModalCreateUpdate extends Component
         $this->studentModalCreateUpdate = true;
     }
 
-    public function closeStudentModalCreateUpdate()
+    public function closeModal()
     {
         $this->resetExcept('arrDocumentType', 'resetInputFile');
         $this->resetErrorBag();
@@ -106,8 +106,6 @@ class ModalCreateUpdate extends Component
     {
         $validated = $this->validate();
 
-        dd($validated);
-
         $student = Student::find($id);
 
         if ($validated['editPhoto']) {
@@ -117,7 +115,7 @@ class ModalCreateUpdate extends Component
             $validated['photo'] = $validated['editPhoto']->store('photos');
         }
 
-        $student->fill($validated);
+        $student->fill(array_filter($validated));
 
         if ($student->isDirty()) {
             $student->save();
@@ -137,7 +135,7 @@ class ModalCreateUpdate extends Component
         $this->resetExcept('arrDocumentType');
         $this->resetErrorBag();
         $this->resetInputFile++;
-        $this->emit('refresh');
+        $this->emitTo('student.students','refresh');
     }
 
     public function render()

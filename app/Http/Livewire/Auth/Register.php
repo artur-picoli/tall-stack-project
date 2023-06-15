@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Auth;
 
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Livewire\Component;
+use App\Rules\PasswordRule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Livewire\Component;
 
 class Register extends Component
 {
@@ -25,18 +25,16 @@ class Register extends Component
 
     public function register()
     {
-        $this->validate([
+        $validated = $this->validate([
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'same:passwordConfirmation'],
-            'passwordConfirmation' => ['required', 'min:8', 'same:password']
+            'password' => ['required', New PasswordRule, 'same:passwordConfirmation'],
+            'passwordConfirmation' => ['required','same:password']
         ]);
 
-        $user = User::create([
-            'email' => $this->email,
-            'name' => $this->name,
-            'password' => Hash::make($this->password),
-        ]);
+        $validated['password'] = Hash::make($validated['password']);
+
+        $user = User::create($validated);
 
         event(new Registered($user));
 

@@ -7,7 +7,7 @@
     </div>
     <div class="flex flex-col justify-between py-4 bg-white dark:bg-gray-800 md:flex-row md:items-center">
         <div class="mb-4 md:mb-0 md:order-1">
-            <x-button icon="plus" primary label="Novo do Aluno" wire:click="$emit('openStudentModalCreateUpdate')" />
+            <x-button icon="plus" primary label="Novo do Aluno" wire:click="$emitTo('student.modal-create-update', 'openStudentModalCreateUpdate')" />
         </div>
         <div class="md:order-2">
             <x-input icon="search" wire:model="search" placeholder="Nome do aluno" />
@@ -70,12 +70,12 @@
                             </td>
                             <td class="px-6 py-4">
                                 <x-button icon="users" primary label="Responsáveis"
-                                    wire:click="$emit('openModalBindGuardianStudent', {{ $student->id }})" />
+                                    wire:click="$emitTo('student.modal-bind-guardian-student', 'openModalBindGuardianStudent', {{ $student->id }})" />
                             </td>
                             <td class="px-6 gap-3 py-4 text-right">
                                 <x-dropdown>
                                     <x-dropdown.item icon="pencil-alt" label="Editar"
-                                        wire:click="$emit('edit', {{ $student->id }})" />
+                                        wire:click="$emitTo('student.modal-create-update','edit', {{ $student->id }})" />
                                     <x-dropdown.item icon="trash" label="Excluir"
                                         wire:click="delete({{ $student->id }})" />
                                 </x-dropdown>

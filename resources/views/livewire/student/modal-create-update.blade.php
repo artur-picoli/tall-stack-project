@@ -43,7 +43,7 @@
     </x-modal.card>
     <script>
         function closeModal() {
-            Livewire.emit('closeStudentModalCreateUpdate')
+            Livewire.emit('closeModal')
         }
     </script>
 </div>
