@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Guardian;
 
 
-use App\Http\Livewire\Guardian\Traits\ModalCreateUpdatePropertiesRulesValidationTrait;
-use App\Models\Guardian;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use App\Models\Guardian;
 use WireUi\Traits\Actions;
+use Livewire\WithFileUploads;
+use App\Events\GuardianStudentCreate;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Livewire\Guardian\Traits\ModalCreateUpdatePropertiesRulesValidationTrait;
 
 class ModalCreateUpdate extends Component
 {
@@ -81,6 +82,8 @@ class ModalCreateUpdate extends Component
             'description' => 'Novo responsável criado com sucesso! ;)',
             'icon'        => 'success'
         ]);
+
+        GuardianStudentCreate::dispatch();
 
         $this->resetModalAfterSaveOrUpdateAndRefreshList();
     }

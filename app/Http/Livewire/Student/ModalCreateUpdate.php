@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Student;
 
-use App\Events\StudentCreate;
+use App\Events\GuardianStudentCreate;
 use App\Http\Livewire\Student\Traits\ModalCreateUpdatePropertiesRulesValidationTrait;
 use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
@@ -83,7 +83,7 @@ class ModalCreateUpdate extends Component
             'icon'        => 'success'
         ]);
 
-        StudentCreate::dispatch();
+        GuardianStudentCreate::dispatch();
 
         $this->resetModalAfterSaveOrUpdateAndRefreshList();
     }
