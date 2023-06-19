@@ -37,10 +37,39 @@ O projeto possui as seguintes características/funcionalidades:
 
 ## Comandos a serem executados
 
-Clonar este projeto via interface do Github, ou rodando o seguinte comando em seu terminal:
+Clonar este projeto via interface do Github, ou rodar o seguinte comando em seu terminal:
+
 ```
-php artisan serve
+git clone git@github.com:artur-picoli/tall-stack-project.git
 ```
+Acesse o projeto e rode o seguinte comando para instalar as dependências:
+
+```
+composer install --no-scripts
+```
+
+Copie o arquivo .env.example, ou rode o seguinte comando:
+
+```
+cp .env.example .env
+```
+
+Crie uma nova chave para a aplicação:
+
+```
+php artisan key:generate
+
+```
+
+Rodar os seguintes comandos para instalar mais algumas dependências:
+
+```
+npm install
+npm run build
+
+```
+
+
 
 
 
