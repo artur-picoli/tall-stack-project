@@ -14,18 +14,16 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
+    {   
+        User::factory()->state([
+            'email' => 'demonstracao@example.com',
+        ])->create();
+
         User::factory(10)->create();
-        Guardian::factory(50)->create();
+
         Student::factory(50)->hasAttached(
             Guardian::factory()->count(5),
             ['type' => rand(1,2)]
         )->create();
-
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

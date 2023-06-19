@@ -4,13 +4,12 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StudentCreate implements ShouldBroadcast
+class GuardianStudentCreate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -30,7 +29,7 @@ class StudentCreate implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('studentsCount'),
+            new PrivateChannel('guardiansStudentsCount'),
         ];
     }
 }

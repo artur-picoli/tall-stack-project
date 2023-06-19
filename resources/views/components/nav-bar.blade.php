@@ -73,6 +73,18 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
+                <a href="{{ route('inicio') }}"
+                    class="flex items-center p-2 {{ Route::currentRouteName() == 'inicio' ? 'text-indigo-600 font-bold bg-gray-100 dark:bg-gray-700' : 'text-gray-900 dark:text-white' }} rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <svg aria-hidden="true"
+                        class="flex-shrink-0 w-6 h-6  transition {{ Route::currentRouteName() == 'inicio' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400' }} duration-75  group-hover:text-gray-900 dark:group-hover:text-white"
+                        fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Home</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('alunos') }}"
                     class="flex items-center p-2 {{ Route::currentRouteName() == 'alunos' ? 'text-indigo-600 font-bold bg-gray-100 dark:bg-gray-700' : 'text-gray-900 dark:text-white' }} rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg aria-hidden="true"
