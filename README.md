@@ -41,7 +41,7 @@ O projeto possui as seguintes características/funcionalidades:
 Clonar este projeto via interface do Github, ou rodar o seguinte comando em seu terminal:
 
 ```
-git clone git@github.com:artur-picoli/tall-stack-project.git
+git clone https://github.com/artur-picoli/tall-stack-project.git
 ```
 
 Acesse o projeto e rode o seguinte comando para instalar as dependências:
