@@ -11,41 +11,44 @@
 
 Este projeto foi criado para consolidar conhecimentos já adquiridos, como também implementar novas abordagens e conceitos.
 
-O mesmo foi criado utilizando as seguintes tecnogias: 
+O mesmo foi criado utilizando as seguintes tecnologias: 
 
 - PHP
-- TALL Stack(Tailwind CSS, Alpine JS, Laravel e Livewire)
+- TALL Stack (Tailwind CSS, Alpine JS, Laravel e Livewire)
 - Banco de dados MySQL.
 
 O projeto possui as seguintes características/funcionalidades:
 
-- Criação de Usuários, com autenticação via e-amail.
+- Criação de Usuários, com autenticação via e-mail.
 - Recuperação de senha.
 - Alteração de perfil (dados pessoais, senhas), utilizando convenções e boas práticas de segurança.
 - Crud completo de alunos.
 - Crud completo de responsáveis.
-- Criação de vínculos entre alunos e responsáveis, apartir do aluno (cada aluno poderá ter no máximo 5 responsáveis vinculados).
-- Criação de vínculos entre responsáveis e alunos, apartir do responsável (cada responsável poderá ter no máximo 5 alunos vinculados).
+- Criação de vínculos entre alunos e responsáveis, a partir do aluno (cada aluno pode ter no máximo 5 responsáveis vinculados).
+- Criação de vínculos entre responsáveis e alunos, a partir do responsável (cada responsável pode ter no máximo 5 alunos vinculados).
 - Contador de alunos e responsáveis na Home, ao qual são atualizados em tempo real, utilizando Broadcasting de eventos via WebSocket com Pusher Channels.
 
 ## Requerimentos da aplicação
 
 - PHP 8.1+
-- Apache ou Nginx
+- Apache
 - MySQL
 - Composer
+- Node.js
 
-## Comandos a serem executados
+## Configurações e comandos necessários
 
 Clonar este projeto via interface do Github, ou rodar o seguinte comando em seu terminal:
 
 ```
 git clone git@github.com:artur-picoli/tall-stack-project.git
 ```
+
 Acesse o projeto e rode o seguinte comando para instalar as dependências:
 
 ```
 composer install --no-scripts
+npm install
 ```
 
 Copie o arquivo .env.example, ou rode o seguinte comando:
@@ -61,13 +64,74 @@ php artisan key:generate
 
 ```
 
-Rodar os seguintes comandos para instalar mais algumas dependências:
+Buildar os assets da aplicação:
 
 ```
-npm install
 npm run build
+```
+
+- Crie uma conta no [Mailtrap](https://mailtrap.io/), ou outra plataforma de testes de e-mail de sua preferência.
+- Crie uma conta no [Pusher](https://pusher.com/).
+
+No arquivo .ENV, realizar as seguintes alterações e salvar o arquivo:
+
+
+- Altere a variável [APP_URL] para: http://localhost:8000
+- Crie uma Database no MySQL e coloque o nome na variável [DB_DATABASE]
+- Altere a variável [BROADCAST_DRIVER] para: pusher
+- Altere a variável [QUEUE_CONNECTION] para: database
+- Altere as variáveis [MAIL] com as credencias do Mailtrap, ou outra plataforma de teste de e-mails de sua preferência.
+- Altere as variáveis [PUSHER] com as credenciais fornecidas pela plataforma.
+
+Criar os diretórios locais para o storage de imagens de perfil, alunos e responsáveis, rodando o seguinte comando:
 
 ```
+php artisan storage:link
+```
+
+Criar a tabela de gerenciamento de filas:
+
+```
+php artisan queue:table
+```
+
+rodar as migrações e popular a database:
+
+```
+php artisan migrate --seed
+```
+
+Abra um terminal e rode o seguinte comando, para iniciar o servidor:
+
+```
+php artisan serve
+```
+
+Abra outra guia do terminal e rode o seguinte comando para iniciar as filas:
+
+```
+php artisan queue:work
+```
+
+## Utilizando a aplicação
+
+Após seguir todos os passos, será possível criar uma nova conta, validando a mesma em sua plataforma de e-mail de testes, ou caso prefira, utilize as seguintes credenciais de teste:
+```
+E-mail: demonstracao@example.com
+Senha: password
+```
+
+Após logado, será possível ter acesso a todas as funcionalidades descritas no tópico Sobre o projeto.
+
+Eventuais dúvidas, basta criar uma Issue neste repositório.
+
+Um abraço!
+
+
+
+
+
+
 
 
 
