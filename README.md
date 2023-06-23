@@ -115,7 +115,7 @@ php artisan queue:work
 
 ## Utilizando a aplicação
 
-Após seguir todos os passos, será possível criar uma nova conta, validando a mesma em sua plataforma de e-mail de testes, ou caso prefira, utilize as seguintes credenciais de teste:
+Após seguir todos os passos, será possível criar uma nova conta, validando a mesma em sua plataforma de e-mail de testes (Mailtrap, ou alguma outra) ou caso prefira, utilize as seguintes credenciais de teste:
 ```
 E-mail: demonstracao@example.com
 Senha: password
