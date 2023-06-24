@@ -2,15 +2,16 @@
 
 namespace Tests\Feature\Auth\Passwords;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Livewire\Livewire;
 use Tests\TestCase;
+use App\Models\User;
+use Livewire\Livewire;
+use App\Rules\PasswordRule;
+use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ResetTest extends TestCase
 {
@@ -55,13 +56,13 @@ class ResetTest extends TestCase
             'token' => $token,
         ])
             ->set('email', $user->email)
-            ->set('password', 'new-password')
-            ->set('passwordConfirmation', 'new-password')
+            ->set('password', 'Senha@@123')
+            ->set('passwordConfirmation', 'Senha@@123')
             ->call('resetPassword');
 
         $this->assertTrue(Auth::attempt([
             'email' => $user->email,
-            'password' => 'new-password',
+            'password' => 'Senha@@123',
         ]));
     }
 
@@ -116,7 +117,7 @@ class ResetTest extends TestCase
         ])
             ->set('password', 'secret')
             ->call('resetPassword')
-            ->assertHasErrors(['password' => 'min']);
+            ->assertHasErrors(['password' => PasswordRule::class]);
     }
 
     /** @test */
