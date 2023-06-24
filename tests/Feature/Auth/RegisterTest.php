@@ -5,8 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use Tests\TestCase;
 use Livewire\Livewire;
-use Illuminate\Support\Facades\Hash;
-use App\Providers\RouteServiceProvider;
+use App\Rules\PasswordRule;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -43,8 +42,8 @@ class RegisterTest extends TestCase
         Livewire::test('auth.register')
             ->set('name', 'Tall Stack')
             ->set('email', 'tallstack@example.com')
-            ->set('password', 'password')
-            ->set('passwordConfirmation', 'password')
+            ->set('password', 'Senha@@123')
+            ->set('passwordConfirmation', 'Senha@@123')
             ->call('register')
             ->assertRedirect(route('inicio'));
 
@@ -84,7 +83,7 @@ class RegisterTest extends TestCase
     /** @test */
     function email_hasnt_been_taken_already()
     {
-        User::factory()->create(['email' => fake()->email()]);
+        User::factory()->create(['email' => 'tallstack@example.com']);
 
         Livewire::test('auth.register')
             ->set('email', 'tallstack@example.com')
@@ -95,7 +94,7 @@ class RegisterTest extends TestCase
     /** @test */
     function see_email_hasnt_already_been_taken_validation_message_as_user_types()
     {
-        User::factory()->create(['email' => fake()->email()]);
+        User::factory()->create(['email' => 'tallstack@example.com']);
 
         Livewire::test('auth.register')
             ->set('email', 'smallstack@gmail.com')
@@ -122,7 +121,7 @@ class RegisterTest extends TestCase
             ->set('password', 'secret')
             ->set('passwordConfirmation', 'secret')
             ->call('register')
-            ->assertHasErrors(['password' => 'min']);
+            ->assertHasErrors(['password' => PasswordRule::class]);
     }
 
     /** @test */
